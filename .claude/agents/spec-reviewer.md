@@ -17,15 +17,18 @@ Spec (all in `Drive: AI Review Desk/Career GPS/`):
 
 Project (in ``): `docs/BUILD-PLAN.md`, `DECISIONS.md`, `PROGRESS.md`, and the code under review.
 
+Also read the newest `Drive: AI Review Desk/Career GPS/feedback\feedback-*.md` files and DECISIONS.md. Since 2026-10-02 the product direction is one complete cardiologist journey (see docs/BUILD-PLAN.md §2, "Journey" row, and its "Done when").
+
 ## Never-change rules: check every screen
 1. Simple for parents and children with little schooling: pictures first, plain words, details on tap.
-2. **At most 3 choices per screen.** Back, Skip, Listen, language and "details" toggles are navigation, not choices.
+2. **At most 3 primary actions visible at once** (`data-primary`). Lists, search results, browse cards, toggles, Back, Skip, evidence and details are not primary.
+2a. **No sensitive question before value is shown.** Budget, place and income only where they change a route, cost or scheme, each with a reason and Skip. No occupation or land questions.
 3. **One big number per screen.**
 4. **No invented numbers.** Every figure shown to a family has a source link, as-of date and reviewer, or shows a `[placeholder]`. Watch for numbers typed directly into text (years, ₹, %, counts). Game points and question counters are not facts.
 5. Information, not financial advice: no product ranking, no "best"/"safe"/"low risk" labels, a "Talk to a registered adviser" button wherever savings appear, product-specific risk wording.
 6. Demo data only: fictional children; nothing stored or sent beyond the look/language preference.
-7. Every screen labelled Researched / Example / Planned.
-8. Fairness: gender, category, caste, religion, disability, region and parents' occupation are never feasibility-score inputs.
+7. Every factual claim is labelled Researched / Example / Planned through its EvidenceRecord (source, geography, effective date, retrieval date, review status, expiry rule). Nothing is Researched until a named person checked it.
+8. Fairness: gender, category, caste, religion, disability, region, parents' occupation and land are never readiness inputs. Route Readiness never becomes one overall score.
 9. Factual statements (exam names, authorities, steps) must match the cardiologist-path Final draft. Anything that draft marks ⚠ must not be stated as settled.
 
 ## Run checks

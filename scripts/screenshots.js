@@ -12,10 +12,10 @@ const BASE = process.env.CGPS_URL || "http://localhost:4173";
 
 // Main screens, in report order. Edit this list as screens are added.
 const shots = custom.length ? custom : [
-  "screen=home",                     // 1. Who is using this?
-  "screen=child-interests",          // 2. Child: what do you love doing?
-  "screen=parent-plan&lang=mr",      // 3. Parent: one big number, in Marathi
-  "screen=parent-road"               // 4. Parent: the road, with the life slider button
+  "screen=start",                    // 1. What future are we exploring today?
+  "screen=route",                    // 2. Branching pathway with decision points
+  "screen=readiness&lang=mr",        // 3. Route Readiness, in Marathi
+  "screen=passport"                  // 4. Career Passport with three actions
 ];
 
 (async () => {

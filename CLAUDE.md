@@ -22,7 +22,8 @@ Instructions: `Drive: AI Review Desk/Career GPS/CLAUDE-CODE-START.md`, then each
 4. Update `PROGRESS.md`, and record technical decisions in `DECISIONS.md`.
 
 ## Never-change rules
-- Users are parents and children with little schooling: pictures first, at most 3 choices per screen, one big number per screen, details on tap, regional language.
+- Users are parents and children with little schooling: pictures first, at most 3 primary actions visible at once, one big number per screen, details on tap, regional language.
+- No sensitive question before value is shown; ask only where the answer changes a route, cost or scheme, say why, allow Skip.
 - Never invent a number. Every figure has a source link and date, or shows a `[placeholder]`.
 - Information, not financial advice. No product ranking. "Talk to a registered adviser" button.
 - Demo data only (fictional children) until the privacy review is done.

@@ -49,5 +49,24 @@
 - Age-slider skeleton ("life road"), with stages only and no ages.
 - Tests: 39 data-rule and logic tests; 36 phone-size click-through tests in Edge (every screen × both languages, plus flows).
 
-**Next (week 2)**
-- Cardiologist journey at full depth: route choice (main / affordable / alternative), Maharashtra college list (placeholders until researched), four study/work tracks, school choice by age, Marathi sample of the whole journey.
+## 2026-10-02: Cardiologist journey (direction update)
+**Inputs:** the owner's pasted direction update, feedback-2026-10-02-01 and -02 (all MUST items applied; see DECISIONS.md).
+
+**Done**
+- New opening: "What future are we exploring today?" (Search / Possibilities / Continue saved), with Together as the default mode.
+- Onboarding sensitive questions removed.
+  - Budget and place are asked at the cost step.
+  - Income is asked only if the family chooses "Check what we may qualify for".
+  - Marks and subjects are asked at "Where I am".
+  - Each question says why and has Skip.
+- Pathway schema and data packs (cardiologist, plus a musician sample that runs on the same screens).
+- Twelve-step journey, plus family relay, a branching route view, Route Readiness (5 areas, no score), cost scenarios, support, funding gap, monthly estimate, three owned actions, review date and Career Passport (print or save).
+- "Change something": budget, marks, location, entrance result, interest. It shows what changed, routes affected, cost scenario now, updated actions and what was kept.
+- Tests:
+  - 36 data and engine tests;
+  - 88 phone-size click-throughs in English and Marathi at 412px and 390px, including the full journey (≤28 taps) and Change something.
+
+**Next**
+- Musician journey (Build 2).
+- Then "Where to keep the money".
+- Then bank-by-bank comparison (see BUILD-PLAN §2).
