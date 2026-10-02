@@ -2,7 +2,7 @@
 
 Shows a child and parent the real road to any career: the steps, the cost, the help available, and what to do this month.
 
-**Status:** One complete cardiologist journey (demo, fictional child). Pilot state: Maharashtra. The product spec lives in `Drive: AI Review Desk/Career GPS/`.
+**Status:** One complete cardiologist journey (demo, fictional child). Pilot state: Maharashtra. Goal and scope: PROJECT_BRIEF.md. How it is built and reviewed: PROCESS.md. Current step: STATUS.md.
 
 ## Open the demo
 - Double-click **`Open Career GPS.cmd`** in this folder. It opens `app/dist/index.html`: one file, works offline, fetches nothing from the internet.
@@ -18,10 +18,11 @@ Shows a child and parent the real road to any career: the steps, the cost, the h
 | `app/e2e/` | Click-through tests at phone size, in English and Marathi, using the Edge on this PC |
 | `prototype/` | Sprint 0 clickable prototype (reference only) |
 | `scripts/screenshots.js` | Saves phone-size screenshots for session reports |
-| `.claude/agents/spec-reviewer.md` | The reviewer that checks every feature against the spec before the owner sees it |
 | `docs/` | Tech setup, build plan with "done when" tests, fairness and privacy rules |
-| `CLAUDE.md` | Session routine: feedback → build → check → review → report |
-| `PROGRESS.md` / `DECISIONS.md` | What's done and next / technical decisions with date and reason |
+| `CLAUDE.md` / `AGENTS.md` | Rules for the builder (Claude Code) and for Codex (reviewer, stand-in builder) |
+| `PROJECT_BRIEF.md`, `CONTEXT.md`, `STATUS.md`, `PROCESS.md` | Brief, merged decisions, current step, the build-and-review loop |
+| `reviews/`, `proposals/`, `logs/` | Codex and Claude reviews; outside findings awaiting approval; cycle log |
+| `PROGRESS.md` / `DECISIONS.md` | History only / every decision with date and reason |
 
 ## Commands (in `app/`)
 ```bash

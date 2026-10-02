@@ -74,3 +74,8 @@
 - Musician journey (Build 2).
 - Then "Where to keep the money".
 - Then bank-by-bank comparison (see BUILD-PLAN §2).
+
+## 2026-10-02: Switched to the standard process
+- Standard files created (PROJECT_BRIEF, CONTEXT, STATUS, PROCESS, reviews/, proposals/APPROVALS.md, logs/cycles.csv). Old manual process switched off; past reviews copied into reviews/old-manual-process/.
+- Personal details removed from files and git history; repo published publicly as career-gps; runner entry added.
+
