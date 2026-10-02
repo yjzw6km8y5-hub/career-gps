@@ -66,6 +66,10 @@
   - 36 data and engine tests;
   - 88 phone-size click-throughs in English and Marathi at 412px and 390px, including the full journey (≤28 taps) and Change something.
 
+- Reviewer: round 1 FAIL (7 must-fix), round 2 PASS; should-fix items also fixed.
+- feedback-03: Git state reported; AGENTS.md, CI workflow and PR template prepared locally; private GitHub remote waits for the owner's OK.
+- Committed on branch `feature/cardiologist-journey` (0db4d15). Report: `code-reports\report-2026-10-02-1000.md`.
+
 **Next**
 - Musician journey (Build 2).
 - Then "Where to keep the money".
