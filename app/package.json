@@ -1,0 +1,33 @@
+{
+    "name":  "career-gps",
+    "private":  true,
+    "version":  "0.1.0",
+    "type":  "module",
+    "scripts":  {
+                    "dev":  "vite --port 5173 --strictPort",
+                    "build":  "tsc --noEmit -p . \u0026\u0026 vite build",
+                    "preview":  "vite preview --port 4173 --strictPort",
+                    "test":  "vitest run",
+                    "e2e":  "playwright test",
+                    "check":  "tsc --noEmit -p . \u0026\u0026 vitest run \u0026\u0026 vite build \u0026\u0026 playwright test"
+                },
+    "dependencies":  {
+                         "@fontsource/baloo-2":  "^5.3.0",
+                         "@fontsource/fredoka":  "^5.3.0",
+                         "@fontsource/noto-sans":  "^5.3.0",
+                         "@fontsource/noto-sans-devanagari":  "^5.3.0",
+                         "react":  "^19.3.0",
+                         "react-dom":  "^19.3.0"
+                     },
+    "devDependencies":  {
+                            "@playwright/test":  "^1.63.0",
+                            "@types/node":  "^26.6.4",
+                            "@types/react":  "^19.3.0",
+                            "@types/react-dom":  "^19.3.0",
+                            "@vitejs/plugin-react":  "^6.1.1",
+                            "typescript":  "^7.0.2",
+                            "vite":  "^8.3.2",
+                            "vite-plugin-singlefile":  "^2.3.3",
+                            "vitest":  "^5.0.3"
+                        }
+}

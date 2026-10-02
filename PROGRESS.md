@@ -37,10 +37,17 @@
 - Reviewer: round 1 FAIL (counselling wording), round 2 PASS.
 - Report: `code-reports\report-2026-10-01-2019.md`.
 
-**Blocked / waiting on the owner**
-- Git is not installed. Need OK to install Git for Windows (free) before setting up version history.
-- Answers before Sprint 1, one at a time: ~~(1) look~~ done; ~~(2) first state~~ Maharashtra; (3) feasibility score format: both / 1–10 / icons.
+**Decisions answered:** look B orange; Maharashtra; score format "both"; Marathi checked by Claude for now (a person checks before families).
 
-**Next (Sprint 1 / week 1)**
-- Install Git once approved; first commit.
-- Rebuild in React + TypeScript with the chosen look; family profile by taps; language switch on every screen; Playwright click-through tests.
+## 2026-10-01: Week 1
+**Done**
+- Git set up; first commit (Sprint 0).
+- React + TypeScript app in `app/`, look B orange as a design system, fonts bundled, single-file offline build.
+- Every screen in English and Marathi (Claude-checked draft).
+- Parent "About you" with the new board question. Child: class stepper and interests (3 picture cards per screen, 3 screens).
+- Country chip: India, with Canada and US labelled Planned.
+- Age-slider skeleton ("life road"), with stages only and no ages.
+- Tests: 39 data-rule and logic tests; 36 phone-size click-through tests in Edge (every screen × both languages, plus flows).
+
+**Next (week 2)**
+- Cardiologist journey at full depth: route choice (main / affordable / alternative), Maharashtra college list (placeholders until researched), four study/work tracks, school choice by age, Marathi sample of the whole journey.

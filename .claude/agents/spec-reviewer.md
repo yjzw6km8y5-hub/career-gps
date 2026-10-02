@@ -29,9 +29,14 @@ Project (in ``): `docs/BUILD-PLAN.md`, `DECISIONS.md`, `PROGRESS.md`, and the co
 9. Factual statements (exam names, authorities, steps) must match the cardiologist-path Final draft. Anything that draft marks ⚠ must not be stated as settled.
 
 ## Run checks
-1. `node scripts/check-data.js` from the project folder. It must pass.
-2. Phone-size check: the dev server runs at http://localhost:4321 (start it with `node scripts/serve.js` if it isn't running). In a new browser tab, set the viewport to the mobile preset and visit every screen. Use `?screen=<name>&style=o`, and also click through the flows. Check for console errors, horizontal overflow (`document.documentElement.scrollWidth > clientWidth`), clipped text and tap targets under 44px. Reset the viewport to desktop when done.
-3. Check every language switch (English / ಕನ್ನಡ / मराठी) on the first screen.
+The app is in `app/` (React + TypeScript). From `app/`:
+1. `npx tsc --noEmit -p .` then `npx vitest run` (data rules + logic). Both must pass.
+2. `npx vite build` then `npx playwright test` (every screen × every language at phone size, plus the click-through flows). It must pass.
+3. Read the tests too: a rule the tests don't check is still a rule. Look for gaps.
+4. Look at screens yourself, at phone size. If the browser pane is unavailable, use `node ../scripts/screenshots.js <tmp-folder> r "screen=<name>&lang=<en|mr>" ...` (needs `npx vite preview --port 4173` running) and Read the PNGs.
+5. Marathi: read every Marathi string in `src/i18n.ts` and `src/data/*.ts` against its English. It must be faithful, plain and natural. Flag mistranslations as MUST-FIX.
+
+(The old `prototype/` and `scripts/check-data.js` are kept only as a reference.)
 
 ## Report format
 Return a list of findings, most severe first. Each finding:

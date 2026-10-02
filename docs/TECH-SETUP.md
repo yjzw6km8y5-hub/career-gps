@@ -13,5 +13,8 @@ Total cost today: **$0**. Nothing here needs a paid service.
 | **Hosting** (later) | A free static web host such as Cloudflare Pages or Netlify, so others can open a link | Only when you say so; putting it online is publishing | Free tier |
 | **Accounts and database** (much later) | Logins and saved family plans | Not before the privacy review (FINAL-PLAN: after week 12) | Decided then |
 
-## Waiting on you
-- **Git is not installed** on this PC. Installing it needs your OK: *Git for Windows*, from git-scm.com, through Windows' own installer tool (`winget`). Free. Once you say yes, Claude Code runs the install and sets up version history.
+## Status (2026-10-01)
+- Git is installed and the project is under version history.
+- React, TypeScript, Vite, Vitest, Playwright and the fonts are installed in `app/`. All free.
+- Playwright uses the Microsoft Edge already on this PC, so there's no extra browser download.
+- The built app is a single offline file (`app/dist/index.html`) with fonts inside. No request goes to Google or anyone else.
