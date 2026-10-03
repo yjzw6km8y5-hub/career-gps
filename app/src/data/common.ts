@@ -34,17 +34,17 @@ export const MARKETS = [
 export const FAMILY = { demo: true, fictional: true, child: { name: tx("Asha", "आशा"), fictional: true } } as const;
 
 export const START_PROFILE: Profile = {
-  classLevel: 8, stream: "undecided", marks: "unknown", budget: "unknown", place: "unknown",
+  classLevel: 8, stream: "undecided", marks: "unknown", practice: "unknown", budget: "unknown", place: "unknown",
   entrance: "notYet", interest: "core", income: "unknown", state: "MH"
 };
 
-/** Career packs that run on the pathway engine. Musician is a schema sample (Build 2). */
+/** Career packs that run on the pathway engine. */
 export const PACKS: Record<string, CareerPack> = { cardiologist: CARDIOLOGIST, musician: MUSICIAN };
 
 /** Search catalogue. Only careers with a pack open a journey; the rest say "data coming". */
 export const CATALOGUE: { id: string; icon: string; name: Text; words: string; ready: boolean; sample?: boolean; leans: string[] }[] = [
   { id: "cardiologist", icon: "🩺", name: tx("Heart doctor (cardiologist)", "हृदयाचे डॉक्टर (हृदयरोगतज्ज्ञ)"), words: "heart doctor cardiologist cardiology medicine mbbs neet हृदय डॉक्टर वैद्यकीय", ready: true, leans: ["helping", "science"] },
-  { id: "musician", icon: "🎵", name: tx("Musician", "संगीत कलाकार"), words: "music musician singer singing गायक संगीत कलाकार", ready: false, sample: true, leans: ["music"] },
+  { id: "musician", icon: "🎵", name: tx("Musician", "संगीत कलाकार"), words: "music musician singer singing गायक संगीत कलाकार", ready: true, leans: ["music"] },
   { id: "cricketer", icon: "🏏", name: tx("Cricketer", "क्रिकेटपटू"), words: "cricket cricketer sport sports क्रिकेट खेळ", ready: false, leans: ["sport"] },
   { id: "software", icon: "💻", name: tx("Software engineer", "सॉफ्टवेअर अभियंता"), words: "software engineer computer coding it संगणक अभियंता", ready: false, leans: ["computers", "numbers"] },
   { id: "electrician", icon: "💡", name: tx("Electrician", "इलेक्ट्रिशियन (वीजतंत्री)"), words: "electrician electric wiring iti वीज", ready: false, leans: ["fixing"] },

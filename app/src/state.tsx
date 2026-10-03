@@ -12,7 +12,7 @@ export const SCREENS: Screen[] = ["start", "search", "possibilities", "country",
 
 export type Mode = "together" | "parent" | "child";
 export type ReviewChoice = "month" | "term" | "results";
-export type Changeable = "budget" | "marks" | "place" | "entrance" | "interest";
+export type Changeable = "budget" | "marks" | "practice" | "place" | "entrance" | "interest";
 
 export interface ChangeEntry { what: Changeable; from: string; to: string }
 

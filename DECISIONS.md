@@ -65,4 +65,9 @@
 | 2026-10-02 | Builder works on `main` (the runner only builds and pushes `main`); the `feature/cardiologist-journey` branch was merged into it | Runner requirement |
 | 2026-10-02 | CI workflow file kept on this PC only, not uploaded (owner chose option B); the runner runs the same tests every cycle. PR template kept but not required | GitHub needs an extra 'workflow' permission to upload workflow files |
 | 2026-10-02 | No proposals script yet (Viveka uses `scripts/proposals.py`): approvals are logged by hand in `proposals/APPROVALS.md` with modified time and SHA-256 | Python isn't a dependency of this project; can be added later |
+| 2026-10-03 | Practice-based careers ask "How often does practice happen?" instead of school marks; marks, practice and subject questions each appear only if some route of that career uses them (also in the change sheet) | One engine for many careers; ask only what changes the plan |
+| 2026-10-03 | Practising daily never makes preparation "Ready" while audition requirements are unverified; practising rarely is a Gap | Same honesty rule as marks |
+| 2026-10-03 | Use-case bank of fictional families with expected outcomes is part of the test suite | Any change to what a family would be told shows up as a failing test |
+| 2026-10-03 | Accessibility: axe WCAG 2.1 AA must pass on every screen; parent-screen orange deepened from #D9480F to #C2410C (4.5:1 contrast) | Small text was below 4.5:1; same look, readable for more people |
+| 2026-10-03 | Musician institution, exam-board and scheme names are written as "[to research]" or "[to verify]" placeholders | Never state an unchecked name as fact |
 | 2026-10-01 | Demo v1 was not found on disk; the new looks are a deliberate move away from "too simple" (illustrated role cards, game-path road, one big number) | Only description available: the owner rejected demo v1 as too simple |

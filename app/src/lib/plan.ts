@@ -53,7 +53,12 @@ const allVerified = (pack: CareerPack, ids: string[]) =>
 // route can be is "Unknown". A "Gap" may come from the family's own answer (e.g. marks need
 // help, money is tight), because that doesn't depend on unverified facts.
 function preparation(pack: CareerPack, route: Route, p: Profile): DimResult {
-  if (route.prepBasis === "practice") return r("preparation", "unknown", "prepPractice", "prepActPractice");
+  if (route.prepBasis === "practice") {
+    if (p.practice === "unknown") return r("preparation", "unknown", "prepPractice", "prepActPractice");
+    if (p.practice === "rarely") return r("preparation", "gap", "prepPracticeRarely", "prepActPracticeMore");
+    // Practising often is good, but the level an audition needs is not verified yet: never "Ready".
+    return r("preparation", "unknown", p.practice === "daily" ? "prepPracticeDaily" : "prepPracticeSometimes", p.practice === "daily" ? "prepActRecord" : "prepActPracticeMore");
+  }
   if (p.marks === "unknown") return r("preparation", "unknown", "prepMarksUnknown", "prepActTellMarks");
   if (p.marks === "needsWork") return r("preparation", "gap", "prepNeedsWork", "prepActHelp");
   const requirementVerified = allVerified(pack, pack.rules.filter((x) => route.rules.includes(x.id)).flatMap((x) => x.evidence));
@@ -149,6 +154,7 @@ export function matches(c: Condition, p: Profile): boolean {
   if (c.classAtMost != null && p.classLevel > c.classAtMost) return false;
   if (c.classAtLeast != null && p.classLevel < c.classAtLeast) return false;
   if (c.marks && !c.marks.includes(p.marks)) return false;
+  if (c.practice && !c.practice.includes(p.practice)) return false;
   if (c.budget && !c.budget.includes(p.budget)) return false;
   if (c.entrance && !c.entrance.includes(p.entrance)) return false;
   if (c.interest && !c.interest.includes(p.interest)) return false;
@@ -168,6 +174,12 @@ export function nextActions(pack: CareerPack, p: Profile, today: Date): PlannedA
 
 export function addDays(d: Date, n: number): Date { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
 export function isoDate(d: Date): string { return d.toISOString().slice(0, 10); }
+
+// ---------- which questions a career needs ----------
+/** Ask about school marks only if some route is judged on marks; about practice only if some route is judged on practice. */
+export const usesMarks = (pack: CareerPack) => pack.routes.some((r) => r.prepBasis === "marks");
+export const usesPractice = (pack: CareerPack) => pack.routes.some((r) => r.prepBasis === "practice");
+export const usesSubjects = (pack: CareerPack) => pack.rules.some((x) => x.needsStream);
 
 // ---------- where I am ----------
 export function currentPhase(p: Profile): Phase {

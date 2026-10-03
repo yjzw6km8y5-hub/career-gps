@@ -1,8 +1,8 @@
 import { AskInline, Evidence, Fig, Label, NavBar, NextButton, Screen, StepHeader, useLevelOf } from "../components";
 import { FAMILY } from "../data/common";
-import { PHASES, type Marks, type Route, type Stream } from "../data/schema";
+import { PHASES, type Marks, type Practice, type Route, type Stream } from "../data/schema";
 import { pick } from "../i18n";
-import { currentPhase, matchSchemes } from "../lib/plan";
+import { currentPhase, matchSchemes, usesMarks, usesPractice, usesSubjects } from "../lib/plan";
 import { useApp } from "../state";
 import { useStateText } from "../text";
 
@@ -191,15 +191,17 @@ export function RouteDetail() {
 }
 
 const MARKS: Marks[] = ["strong", "medium", "needsWork"];
+const PRACTICE: Exclude<Practice, "unknown">[] = ["daily", "sometimes", "rarely"];
 const STREAMS: Stream[] = ["pcb", "other", "undecided"];
 
 export function Where() {
   const { s, t, pack, go, update, setProfile } = useApp();
   const p = s.profile;
-  const routeNeedsSubjects = pack.rules.some((x) => x.needsStream);
   const phase = currentPhase(p);
-  const askMarks = p.marks === "unknown" && !s.skipped.includes("marks");
-  const askStream = !askMarks && routeNeedsSubjects && p.classLevel >= 10 && p.stream === "undecided" && !s.skipped.includes("stream");
+  // Each question only for careers where the answer changes readiness.
+  const askMarks = usesMarks(pack) && p.marks === "unknown" && !s.skipped.includes("marks");
+  const askPractice = !askMarks && usesPractice(pack) && p.practice === "unknown" && !s.skipped.includes("practice");
+  const askStream = !askMarks && !askPractice && usesSubjects(pack) && p.classLevel >= 10 && p.stream === "undecided" && !s.skipped.includes("stream");
   const skip = (id: string) => update({ skipped: [...s.skipped, id] });
   const setClass = (n: number) => setProfile({ classLevel: Math.min(12, Math.max(1, n)) });
   return (
@@ -219,6 +221,10 @@ export function Where() {
         <AskInline id="marks" question={t("marksQ")} why={t("whyMarks")}
           options={MARKS.map((m) => ({ v: m, label: t(`marks_${m}`), icon: m === "strong" ? "😊" : m === "medium" ? "🙂" : "🤝" }))}
           onAnswer={(v) => setProfile({ marks: v })} onSkip={() => skip("marks")} />
+      ) : askPractice ? (
+        <AskInline id="practice" question={t("practiceQ")} why={t("whyPractice")}
+          options={PRACTICE.map((x) => ({ v: x, label: t(`practice_${x}`), icon: x === "daily" ? "🎶" : x === "sometimes" ? "🎵" : "🌱" }))}
+          onAnswer={(v) => setProfile({ practice: v })} onSkip={() => skip("practice")} />
       ) : askStream ? (
         <AskInline id="stream" question={t("streamQ")} why={t("whyStream")}
           options={STREAMS.map((x) => ({ v: x, label: t(`stream_${x}`) }))}

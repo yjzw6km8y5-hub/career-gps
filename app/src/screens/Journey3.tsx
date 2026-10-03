@@ -1,8 +1,8 @@
 import { Fig, Label, LevelBadge, NextButton, Screen, StepHeader, useDate } from "../components";
 import { FAMILY } from "../data/common";
-import type { Budget, Entrance, InterestLean, Marks, Place } from "../data/schema";
+import type { Budget, Entrance, InterestLean, Marks, Place, Practice } from "../data/schema";
 import { pick, type StringKey } from "../i18n";
-import { addDays, currentPhase, isoDate, matchSchemes } from "../lib/plan";
+import { addDays, currentPhase, isoDate, matchSchemes, usesMarks, usesPractice } from "../lib/plan";
 import { saveJourney, clearSaved } from "../save";
 import { useApp, type Changeable, type ReviewChoice } from "../state";
 import { useStateText } from "../text";
@@ -116,6 +116,7 @@ export function Passport() {
 const CHANGES: { what: Changeable; options: string[] }[] = [
   { what: "budget", options: ["tight", "some", "flexible"] satisfies Budget[] },
   { what: "marks", options: ["strong", "medium", "needsWork"] satisfies Marks[] },
+  { what: "practice", options: ["daily", "sometimes", "rarely"] satisfies Practice[] },
   { what: "place", options: ["local", "away"] satisfies Place[] },
   { what: "entrance", options: ["notYet", "qualified", "notQualified"] satisfies Entrance[] },
   { what: "interest", options: ["core", "technology", "care"] satisfies InterestLean[] }
@@ -191,7 +192,7 @@ export function ChangeSheet() {
         ) : (
           <>
             <p className="q-sub">{t("changeHint")}</p>
-            {CHANGES.map((c) => (
+            {CHANGES.filter((c) => (c.what !== "marks" || usesMarks(pack)) && (c.what !== "practice" || usesPractice(pack))).map((c) => (
               <fieldset key={c.what} className="change-group" data-change={c.what}>
                 <legend>{t(`change_${c.what}`)}</legend>
                 <div className="chips">

@@ -148,6 +148,7 @@ export interface Condition {
   classAtMost?: number;
   classAtLeast?: number;
   marks?: Marks[];
+  practice?: Practice[];
   budget?: Budget[];
   entrance?: Entrance[];
   interest?: InterestLean[];
@@ -202,11 +203,14 @@ export type Place = "local" | "away" | "unknown";
 export type Entrance = "notYet" | "qualified" | "notQualified";
 export type Stream = "pcb" | "other" | "undecided";
 export type Income = "low" | "mid" | "high" | "unknown";
+/** How often the child practises (for practice-based routes such as music). */
+export type Practice = "daily" | "sometimes" | "rarely" | "unknown";
 
 export interface Profile {
   classLevel: number;
   stream: Stream;
   marks: Marks;
+  practice: Practice;
   budget: Budget;
   place: Place;
   entrance: Entrance;

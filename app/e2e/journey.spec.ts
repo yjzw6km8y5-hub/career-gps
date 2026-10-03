@@ -120,6 +120,52 @@ for (const lang of ["en", "mr"] as Lang[]) {
   });
 }
 
+for (const lang of ["en", "mr"] as Lang[]) {
+  const t = (k: StringKey, v?: Record<string, string | number>) => translate(lang, k, v);
+
+  test(`[${lang}] the full musician journey at 390px, on the same screens`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`/?lang=${lang}`);
+    await page.locator('[data-start="search"]').click();
+    await page.locator("#career-search").fill(lang === "en" ? "music" : "संगीत");
+    await page.locator('[data-career="musician"]').click();
+    await expect(page.locator('[data-screen="dream"]')).toBeVisible();
+    await page.locator("[data-select]").nth(1).click();
+    await next(page);                                                     // → handoff
+    await next(page);                                                     // → reality
+    await expect(page.locator(SENSITIVE)).toHaveCount(0);
+    await next(page);                                                     // → routes
+    await expect(page.locator("[data-route]")).toHaveCount(4);
+    await page.locator('[data-route="m.r.after"]').click();
+    await expect(page.locator("[data-gate]")).toHaveCount(1);
+    await page.getByRole("button", { name: new RegExp(t("back")) }).click();
+    await next(page);                                                     // → where
+    // Music asks about practice, not school marks or subjects.
+    await expect(page.locator('[data-ask="marks"]')).toHaveCount(0);
+    await expect(page.locator('[data-ask="practice"]')).toContainText(t("whyPractice"));
+    await page.locator('[data-answer="daily"]').click();
+    await next(page);                                                     // → readiness
+    await expect(page.locator("[data-dim]")).toHaveCount(5);
+    await expect(page.locator('[data-dim="preparation"] [data-level]')).toHaveAttribute("data-level", "unknown");
+    await expect(page.locator('[data-level="ready"]')).toHaveCount(0);
+    await next(page);                                                     // → costs
+    await page.locator('[data-answer="some"]').click();
+    // Some money → the lower-cost community route is the best fit; it doesn't depend on studying away, so place isn't asked.
+    await expect(page.locator('[data-ask="place"]')).toHaveCount(0);
+    await expect(page.locator("[data-scenario]")).toHaveAttribute("data-scenario", "m.sc.community");
+    await next(page);                                                     // → support
+    await expect(page.locator("[data-scheme]")).toHaveCount(2);
+    await next(page); await next(page); await next(page);                 // → gap → monthly → actions
+    await expect(page.locator("[data-owner]")).toHaveCount(3);
+    await next(page);
+    await page.locator('[data-answer="results"]').click();
+    await expect(page.locator("[data-passport-action]")).toHaveCount(3);
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow).toBeLessThanOrEqual(0);
+    expect(await page.locator("body").innerText()).not.toMatch(/MBBS|NEET|doctor|Biology|डॉक्टर|जीवशास्त्र/i);
+  });
+}
+
 test("continue a saved journey after closing the page", async ({ page }) => {
   await page.goto("/?screen=readiness");
   await expect(page.locator('[data-screen="readiness"]')).toBeVisible();
@@ -151,7 +197,7 @@ test("the musician sample runs on the same screens with no code change, and no m
   await expect(page.locator("[data-route]")).toHaveCount(4);
   await noMedical();
   await page.locator('[data-route="m.r.main"]').click();
-  await expect(page.locator("[data-stage]")).toHaveCount(6);
+  await expect(page.locator("[data-stage]")).toHaveCount(7);
   await noMedical();
   for (const screen of ["dream", "handoff", "reality", "readiness", "costs", "support", "gap", "monthly", "actions", "passport"]) {
     await page.goto(`/?career=musician&screen=${screen}`);

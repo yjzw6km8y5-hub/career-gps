@@ -92,10 +92,11 @@ export function StepHeader({ step }: { step: (typeof JOURNEY)[number] }) {
       <NavBar extra={showChange && (
         <button type="button" className="nav-extra" data-action="change" onClick={() => update({ changeOpen: true })}>{t("changeSomething")}</button>
       )} />
-      <div className="q-progress" aria-label={t("stepOf", { n, total: JOURNEY.length })}>
+      <div className="q-progress" role="progressbar" aria-valuemin={1} aria-valuemax={JOURNEY.length} aria-valuenow={n}
+        aria-valuetext={t("stepOf", { n, total: JOURNEY.length })} aria-label={t("stepOf", { n, total: JOURNEY.length })}>
         {JOURNEY.map((j, i) => <span key={j} className={i < n ? "on" : ""} />)}
       </div>
-      <p className="step-of">{t("stepOf", { n, total: JOURNEY.length })}</p>
+      <p className="step-of" aria-hidden="true">{t("stepOf", { n, total: JOURNEY.length })}</p>
     </>
   );
 }
