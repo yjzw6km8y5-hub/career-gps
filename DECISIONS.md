@@ -70,4 +70,8 @@
 | 2026-10-03 | Use-case bank of fictional families with expected outcomes is part of the test suite | Any change to what a family would be told shows up as a failing test |
 | 2026-10-03 | Accessibility: axe WCAG 2.1 AA must pass on every screen; parent-screen orange deepened from #D9480F to #C2410C (4.5:1 contrast) | Small text was below 4.5:1; same look, readable for more people |
 | 2026-10-03 | Musician institution, exam-board and scheme names are written as "[to research]" or "[to verify]" placeholders | Never state an unchecked name as fact |
+| 2026-10-03 | "Where to keep the money" is a side screen opened from the monthly estimate (not a 13th step) | Keeps the owner's 12-step journey order |
+| 2026-10-03 | Savings groups in a fixed order (government-backed, bank, market-linked), stated on screen as "not a ranking"; market-linked options say value can fall and past results are not a promise | Information, not advice; product-specific risk wording |
+| 2026-10-03 | Listen button reads each screen with the phone's own speech voice; warns when the phone has no Marathi voice; [placeholders] are read as "not checked yet" | Low-literacy parents; never read out codes |
+| 2026-10-03 | OPEN (owner): the bank-comparison inclusion rule, e.g. "all scheduled banks above a set size" | Needed before the bank list is final; shown as a placeholder until decided |
 | 2026-10-01 | Demo v1 was not found on disk; the new looks are a deliberate move away from "too simple" (illustrated role cards, game-path road, one big number) | Only description available: the owner rejected demo v1 as too simple |

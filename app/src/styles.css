@@ -445,3 +445,15 @@ main { max-width: 960px; margin: 0 auto; padding: 8px var(--gutter) 24px; }
 .listen-note { font-size: 13px; color: var(--muted); }
 h1:focus { outline: none; }
 h1:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 4px; }
+/* where to keep the money */
+.savings-list { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 12px; }
+.savings-group { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; box-shadow: var(--soft); }
+.savings-name { margin: 0; font-weight: 700; font-size: 19px; }
+.savings-summary { margin: 4px 0 0; color: var(--muted); }
+.product { border-top: 1px solid var(--line); padding: 10px 0 4px; }
+.product-name { margin: 0; font-weight: 700; }
+.product-facts { display: grid; grid-template-columns: 1fr; gap: 4px; margin: 6px 0; }
+.product-facts div { display: flex; gap: 8px; flex-wrap: wrap; }
+.product-facts dt { color: var(--muted); }
+.product-facts dd { margin: 0; }
+.risk-list { margin: 4px 0 0; padding-left: 4px; list-style: none; display: grid; gap: 4px; }

@@ -238,3 +238,21 @@ test("a language the state pack does not offer falls back to English", async ({ 
   await page.goto("/?lang=kn");
   await expect(page.locator("h1")).toHaveText("What future are we exploring today?");
 });
+
+for (const lang of ["en", "mr"] as Lang[]) {
+  const t = (k: StringKey) => translate(lang, k);
+  test(`[${lang}] "Where to keep the money" opens from the monthly estimate, explains three kinds of places and ranks nothing`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`/?screen=monthly&lang=${lang}`);
+    await page.locator('[data-action="savings"]').click();
+    await expect(page.locator('[data-screen="savings"]')).toBeVisible();
+    await expect(page.locator("[data-group]")).toHaveCount(3);
+    for (const g of ["govt", "bank", "market"]) await page.locator(`[data-group="${g}"] summary`).first().click();
+    await expect(page.locator("[data-product]")).toHaveCount(7);
+    await expect(page.locator('[data-screen="savings"]')).toContainText(t("saveNotice"));
+    const text = await page.locator("main").innerText();
+    expect(text).not.toMatch(lang === "en" ? /\b(best|safest|recommended|guaranteed)\b/i : /(सर्वोत्तम|सुरक्षित|हमी)/);
+    await page.getByRole("button", { name: new RegExp(t("back")) }).click();
+    await expect(page.locator('[data-screen="monthly"]')).toBeVisible();
+  });
+}

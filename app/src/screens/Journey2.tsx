@@ -1,4 +1,5 @@
-import { AskInline, Evidence, Fig, Label, LevelBadge, NextButton, Screen, StepHeader, useLevelOf } from "../components";
+import { AskInline, Evidence, Fig, Label, LevelBadge, Listen, NavBar, NextButton, Screen, StepHeader, useFigure, useLevelOf } from "../components";
+import { SAVINGS_GROUPS } from "../data/savings";
 import type { Budget, Income, Place } from "../data/schema";
 import { pick } from "../i18n";
 import { matchSchemes, schemesForGap, schoolYearsLeft, type RoutePlan } from "../lib/plan";
@@ -168,6 +169,51 @@ export function Gap() {
   );
 }
 
+/** "Where to keep the money": opened from the monthly estimate. Explains, never ranks or picks. */
+export function Savings() {
+  const { s, t } = useApp();
+  const figure = useFigure();
+  return (
+    <Screen name="savings">
+      <NavBar title={t("savingsTitle")} extra={<Listen />} />
+      <h1 className="screen-title">{t("savingsTitle")}</h1>
+      <p className="q-sub">{t("savingsHint")}</p>
+      <ul className="savings-list">
+        {SAVINGS_GROUPS.map((g) => (
+          <li key={g.id} className="savings-group" data-group={g.id}>
+            <p className="savings-name"><span aria-hidden="true">{g.icon}</span> {pick(g.name, s.lang)}</p>
+            <p className="savings-summary">{pick(g.summary, s.lang)}</p>
+            <details className="tl-details">
+              <summary>{t("seeProducts")}</summary>
+              {g.products.map((p) => (
+                <div key={p.id} className="product" data-product={p.id}>
+                  <p className="product-name">{pick(p.name, s.lang)}</p>
+                  <p>{pick(p.what, s.lang)}</p>
+                  <p><strong>{t("howReturns")}:</strong> {pick(p.returns, s.lang)}</p>
+                  <dl className="product-facts">
+                    {[p.rate, p.minimum, p.lockIn].map((id) => (
+                      <div key={id}><dt>{pick(figure(id)!.label, s.lang)}</dt><dd><Fig id={id} /></dd></div>
+                    ))}
+                  </dl>
+                  <p className="mini-title">{t("thingsToKnow")}</p>
+                  <ul className="risk-list">{p.risks.map((r, i) => <li key={i}><span aria-hidden="true">⚠</span> {pick(r, s.lang)}</li>)}</ul>
+                  <Evidence ids={p.evidence} />
+                </div>
+              ))}
+            </details>
+          </li>
+        ))}
+      </ul>
+      <p className="notice">{t("saveNotice")}</p>
+      <details className="adviser">
+        <summary>{t("adviserBtn")}</summary>
+        <p>{t("adviserBody")}</p>
+      </details>
+      <p className="screen-foot"><Label kind="example" /></p>
+    </Screen>
+  );
+}
+
 export function Monthly() {
   const { s, t, go } = useApp();
   const years = schoolYearsLeft(s.profile);
@@ -187,7 +233,7 @@ export function Monthly() {
         <summary>{t("adviserBtn")}</summary>
         <p>{t("adviserBody")}</p>
       </details>
-      <p className="screen-foot"><Label kind="planned" /> {t("whereKeep")}</p>
+      <button type="button" className="secondary-btn" data-action="savings" onClick={() => go("savings")}>{t("whereKeep")}</button>
       <Evidence ids={["ev.common.estimate"]} />
       <NextButton onClick={() => go("actions")} />
     </Screen>

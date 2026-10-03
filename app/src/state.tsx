@@ -6,9 +6,9 @@ import type { Plan, PlanChange } from "./lib/plan";
 /** The journey, in order (feedback-2026-10-02-01 §8). "handoff" and "route" are side screens. */
 export const JOURNEY = ["dream", "reality", "routes", "where", "readiness", "costs", "support", "gap", "monthly", "actions", "review", "passport"] as const;
 export type Step = (typeof JOURNEY)[number];
-export type Screen = "start" | "search" | "possibilities" | "country" | "country-planned" | "handoff" | "route" | Step;
+export type Screen = "start" | "search" | "possibilities" | "country" | "country-planned" | "handoff" | "route" | "savings" | Step;
 
-export const SCREENS: Screen[] = ["start", "search", "possibilities", "country", "country-planned", "handoff", "route", ...JOURNEY];
+export const SCREENS: Screen[] = ["start", "search", "possibilities", "country", "country-planned", "handoff", "route", "savings", ...JOURNEY];
 
 export type Mode = "together" | "parent" | "child";
 export type ReviewChoice = "month" | "term" | "results";

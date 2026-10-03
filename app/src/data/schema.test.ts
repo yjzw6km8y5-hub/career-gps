@@ -5,6 +5,7 @@ import { COMMON_EVIDENCE, COMMON_FIGURES, PACKS, STATE_PACKS } from "./common";
 import type { CareerPack, Lang, Text } from "./schema";
 import { STRINGS } from "../i18n";
 import { isEvidenceVerified } from "../lib/plan";
+import { SAVINGS_EVIDENCE, SAVINGS_FIGURES, SAVINGS_GROUPS } from "./savings";
 
 const LANGS: Lang[] = ["en", "mr"];
 
@@ -106,6 +107,44 @@ describe.each(Object.entries(PACKS))("career pack: %s", (_, pack: CareerPack) =>
       expect(t.en).not.toMatch(/\b(best|safe|low risk|guarantee[ds]?)\b/i);
       expect(t.mr).not.toMatch(/(सर्वोत्तम|सुरक्षित|हमी|कमी जोखीम)/);
     }
+  });
+});
+
+describe("where to keep the money", () => {
+  const products = SAVINGS_GROUPS.flatMap((g) => g.products);
+  it("has the three kinds of places, in a fixed order that is not a ranking", () => {
+    expect(SAVINGS_GROUPS.map((g) => g.id)).toEqual(["govt", "bank", "market"]);
+  });
+  it("never says best, safe, low risk or guaranteed (English or Marathi)", () => {
+    for (const t of texts(SAVINGS_GROUPS)) {
+      expect(t.en).not.toMatch(/\b(best|safe|safest|low risk|risk-free|guarantee[ds]?|recommended)\b/i);
+      expect(t.mr).not.toMatch(/(सर्वोत्तम|सुरक्षित|हमी|कमी जोखीम|जोखीममुक्त|शिफारस)/);
+    }
+  });
+  it("every option has evidence, at least one plain risk line, and only [placeholder] numbers", () => {
+    const ids = new Set(SAVINGS_EVIDENCE.map((e) => e.id));
+    for (const p of products) {
+      expect(p.evidence.every((id) => ids.has(id)), p.id).toBe(true);
+      expect(p.risks.length, p.id).toBeGreaterThan(0);
+      for (const f of [p.rate, p.minimum, p.lockIn]) {
+        expect(SAVINGS_FIGURES[f].value, f).toBeNull();
+        for (const l of LANGS) expect(SAVINGS_FIGURES[f].placeholder[l]).toMatch(PLACEHOLDER);
+      }
+    }
+  });
+  it("market-linked options say the value can fall and past results are not a promise", () => {
+    for (const p of SAVINGS_GROUPS.find((g) => g.id === "market")!.products) {
+      expect(p.risks.map((r) => r.en).join(" ")).toMatch(/less than you put in/);
+      expect(p.returns.en).toMatch(/not a promise/);
+    }
+  });
+  it("Sukanya Samriddhi Yojana is marked as being for girls", () => {
+    expect(products.find((p) => p.id === "ssy")!.name.en).toMatch(/for girls/);
+  });
+  it("all text is in English and Marathi, with no typed figures", () => {
+    const all = texts(SAVINGS_GROUPS);
+    expect(all.filter((t) => !t.en.trim() || !t.mr.trim())).toEqual([]);
+    expect(all.flatMap((t) => LANGS.map((l) => t[l])).filter((s) => /\d[\d,.]*\s*(₹|%|lakh|crore|years?)|₹\s*\d/i.test(s))).toEqual([]);
   });
 });
 
