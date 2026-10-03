@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavBar, Screen } from "../components";
+import { Listen, NavBar, Screen } from "../components";
 import { CATALOGUE, MARKETS, POSSIBILITIES } from "../data/common";
 import { pick } from "../i18n";
 import { loadSaved } from "../save";
@@ -28,6 +28,7 @@ export function Start() {
   return (
     <Screen name="start">
       <h1 className="big-q">{t("startQ")}</h1>
+      <p className="start-listen"><Listen /></p>
       <div className="mode" role="radiogroup" aria-label={t("whoHere")}>
         <span className="mode-label">{t("whoHere")}</span>
         {MODES.map((m) => (

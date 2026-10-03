@@ -6,7 +6,7 @@ import { addDays, currentPhase, isoDate, matchSchemes, usesMarks, usesPractice }
 import { saveJourney, clearSaved } from "../save";
 import { useApp, type Changeable, type ReviewChoice } from "../state";
 import { useStateText } from "../text";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function ActionCards() {
   const { s, t, plan, update } = useApp();
@@ -137,13 +137,24 @@ export function ChangeSheet() {
   const last = s.changeLog[s.changeLog.length - 1];
   const routeName = (id: string) => pick(pack.routes.find((r) => r.id === id)!.name, s.lang);
   const scenarioName = (id: string) => pick(pack.scenarios.find((x) => x.id === id)!.name, s.lang);
-  const close = () => update({ changeOpen: false, lastChange: null });
+  const close = () => {
+    update({ changeOpen: false, lastChange: null });
+    // Return focus to the button that opened the sheet.
+    requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-action="change"]')?.focus());
+  };
+  // Focus the sheet title when it opens or shows its result; Escape closes it.
+  useEffect(() => { document.getElementById("change-title")?.focus(); }, [s.lastChange]);
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") close(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
   const focus = plan.routes.find((r) => r.route.id === plan.focus)!;
   return (
     <div className="sheet-backdrop" role="dialog" aria-modal="true" aria-labelledby="change-title" data-sheet="change">
       <div className="sheet">
         <div className="sheet-head">
-          <h2 id="change-title" className="sheet-title">{t("changeTitle")}</h2>
+          <h2 id="change-title" className="sheet-title" tabIndex={-1}>{t("changeTitle")}</h2>
           <button type="button" className="nav-back" onClick={close}>{t("closeSheet")}</button>
         </div>
         {ch && last ? (

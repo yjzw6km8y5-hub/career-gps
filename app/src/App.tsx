@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, type JSX } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type JSX } from "react";
 import { MARKETS, PACKS, START_PROFILE, STATE_PACKS } from "./data/common";
 import type { Lang, Profile } from "./data/schema";
 import { fill, pick, translate } from "./i18n";
@@ -98,6 +98,16 @@ export default function App() {
     document.documentElement.lang = s.lang;
     document.body.dataset.role = role;
   }, [s.lang, role]);
+
+  // On every new screen, move focus to its title so screen readers announce where the user is.
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) { firstRender.current = false; return; }
+    requestAnimationFrame(() => {
+      const h = document.querySelector<HTMLElement>("main h1");
+      if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+    });
+  }, [s.screen, s.routeId]);
 
   // Keep the (fictional) journey resumable on this device.
   useEffect(() => { if (stepIndex(s.screen) >= 0) saveJourney(s); }, [s]);

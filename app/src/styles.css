@@ -440,3 +440,8 @@ main { max-width: 960px; margin: 0 auto; padding: 8px var(--gutter) 24px; }
 .handoff-facts { list-style: none; padding: 0; margin: 12px auto; display: grid; gap: 8px; text-align: left; max-width: 420px; font-weight: 600; }
 .handoff-facts li { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; }
 .route-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+.start-listen { text-align: center; margin: 0 0 8px; }
+.start-listen .nav-extra { margin-left: 0; }
+.listen-note { font-size: 13px; color: var(--muted); }
+h1:focus { outline: none; }
+h1:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 4px; }

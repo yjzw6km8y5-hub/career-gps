@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { COMMON_EVIDENCE, COMMON_FIGURES } from "./data/common";
 import type { EvidenceRecord, Figure, ReviewLevel } from "./data/schema";
 import { pick } from "./i18n";
@@ -82,16 +82,46 @@ export function NavBar({ title, extra }: { title?: string; extra?: ReactNode }) 
   );
 }
 
-/** Header for a journey step: Back, progress, and the Change-something button. */
+// What the Listen button reads: the screen title, then its main content, in reading order.
+const SAY = "main h1, main .q-sub, main .lede-strong, main .ask-q, main .ask-why, main .q-name, main .select-name, main .day-line li, " +
+  "main .route-name, main .route-summary, main .dim-name, main .dim .level, main .dim-reason, main .dim-action, main .bn-lead, main .bn-value, " +
+  "main .bn-unit, main .scheme-name, main .scheme-status, main .action-owner, main .action-text, main .action-why, main .passport dt, main .passport dd, main .soon p";
+const SPEECH_LANG = { en: "en-IN", mr: "mr-IN" } as const;
+
+/** Reads the current screen aloud (for parents and children who read little). Unchecked [placeholders] are read as "not checked yet". */
+export function Listen() {
+  const { s, t } = useApp();
+  const [note, setNote] = useState("");
+  const say = () => {
+    if (!("speechSynthesis" in window)) { setNote(t("noVoice")); return; }
+    const voices = window.speechSynthesis.getVoices();
+    if (s.lang === "mr" && voices.length > 0 && !voices.some((v) => v.lang.toLowerCase().startsWith("mr"))) setNote(t("noMarathiVoice"));
+    const text = [...document.querySelectorAll<HTMLElement>(SAY)].map((el) => el.innerText.trim()).filter(Boolean).join(". ")
+      .replace(/\[[^\]]*\]/g, t("notCheckedSpoken"));
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = SPEECH_LANG[s.lang];
+    window.speechSynthesis.speak(u);
+  };
+  return (
+    <>
+      <button type="button" className="nav-extra listen-btn" data-action="listen" onClick={say}><span aria-hidden="true">🔊</span> {t("listen")}</button>
+      {note && <span className="listen-note" role="status">{note}</span>}
+    </>
+  );
+}
+
+/** Header for a journey step: Back, Listen, progress, and the Change-something button. */
 export function StepHeader({ step }: { step: (typeof JOURNEY)[number] }) {
   const { t, update } = useApp();
   const n = stepIndex(step) + 1;
   const showChange = n >= 3; // once there is a plan to change
   return (
     <>
-      <NavBar extra={showChange && (
-        <button type="button" className="nav-extra" data-action="change" onClick={() => update({ changeOpen: true })}>{t("changeSomething")}</button>
-      )} />
+      <NavBar extra={<>
+        <Listen />
+        {showChange && <button type="button" className="nav-extra" data-action="change" onClick={() => update({ changeOpen: true })}>{t("changeSomething")}</button>}
+      </>} />
       <div className="q-progress" role="progressbar" aria-valuemin={1} aria-valuemax={JOURNEY.length} aria-valuenow={n}
         aria-valuetext={t("stepOf", { n, total: JOURNEY.length })} aria-label={t("stepOf", { n, total: JOURNEY.length })}>
         {JOURNEY.map((j, i) => <span key={j} className={i < n ? "on" : ""} />)}
