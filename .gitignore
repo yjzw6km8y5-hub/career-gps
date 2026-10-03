@@ -6,3 +6,6 @@ app/test-results/
 app/playwright-report/
 *.log
 .DS_Store
+
+# Kept on this PC only, not uploaded (owner's choice, 2026-10-02)
+.github/workflows/

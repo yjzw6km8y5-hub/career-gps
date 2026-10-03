@@ -40,5 +40,4 @@ _Newest note first. Each tool ends its turn with a note here (CLAUDE.md section 
 - Do not read or import the AI Review Desk during cycles. Outside input reaches this file only through the owner's approval (CLAUDE.md section 5).
 - Log every cycle in `logs/cycles.csv`, with builder and reviewer. After 3 failed cycles in a row, pause and say why here.
 - When Claude Code hits its usage limit, Codex builds (AGENTS.md); Claude Code reviews those cycles when it is back.
-- 2026-10-02: the project is set to HALTED in the runner on purpose. The first push to GitHub is blocked until the owner gives the GitHub sign-in the "workflow" permission (needed for `.github/workflows/ci.yml`). Resume with `node runner.js resume career-gps` after the first push succeeds.
 _(the runner writes here if it has to stop the project)_
