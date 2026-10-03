@@ -256,3 +256,18 @@ for (const lang of ["en", "mr"] as Lang[]) {
     await expect(page.locator('[data-screen="monthly"]')).toBeVisible();
   });
 }
+
+for (const lang of ["en", "mr"] as Lang[]) {
+  test(`[${lang}] bank-by-bank deposits open from the savings explainer, alphabetical, with no badges`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`/?screen=savings&lang=${lang}`);
+    await page.locator('[data-group="bank"] summary').first().click();
+    await page.locator('[data-action="banks"]').click();
+    await expect(page.locator('[data-screen="banks"]')).toBeVisible();
+    const ids = await page.locator("[data-bank]").evaluateAll((els) => els.map((e) => e.getAttribute("data-bank")));
+    expect(ids).toEqual(["bob", "canara", "hdfc", "icici", "post", "sbi"]); // alphabetical by English name
+    expect(await page.locator("[data-primary]:visible").count()).toBe(0);  // nothing pushes one bank
+    const text = await page.locator("main").innerText();
+    expect(text).not.toMatch(/\b(best|top|recommended|featured|sponsored)\b|सर्वोत्तम|शिफारस/i);
+  });
+}

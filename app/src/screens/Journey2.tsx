@@ -1,5 +1,6 @@
 import { AskInline, Evidence, Fig, Label, LevelBadge, Listen, NavBar, NextButton, Screen, StepHeader, useFigure, useLevelOf } from "../components";
 import { SAVINGS_GROUPS } from "../data/savings";
+import { BANK_INCLUSION_RULE, BANKS } from "../data/banks";
 import type { Budget, Income, Place } from "../data/schema";
 import { pick } from "../i18n";
 import { matchSchemes, schemesForGap, schoolYearsLeft, type RoutePlan } from "../lib/plan";
@@ -171,7 +172,7 @@ export function Gap() {
 
 /** "Where to keep the money": opened from the monthly estimate. Explains, never ranks or picks. */
 export function Savings() {
-  const { s, t } = useApp();
+  const { s, t, go } = useApp();
   const figure = useFigure();
   return (
     <Screen name="savings">
@@ -200,11 +201,47 @@ export function Savings() {
                   <Evidence ids={p.evidence} />
                 </div>
               ))}
+              {g.id === "bank" && (
+                <button type="button" className="secondary-btn" data-action="banks" onClick={() => go("banks")}>{t("compareBanks")}</button>
+              )}
             </details>
           </li>
         ))}
       </ul>
       <p className="notice">{t("saveNotice")}</p>
+      <details className="adviser">
+        <summary>{t("adviserBtn")}</summary>
+        <p>{t("adviserBody")}</p>
+      </details>
+      <p className="screen-foot"><Label kind="example" /></p>
+    </Screen>
+  );
+}
+
+/** Bank-by-bank RD and FD: alphabetical, no badges, no default, every rate dated or a [placeholder]. */
+export function Banks() {
+  const { s, t } = useApp();
+  const figure = useFigure();
+  return (
+    <Screen name="banks">
+      <NavBar title={t("banksTitle")} extra={<Listen />} />
+      <h1 className="screen-title">{t("banksTitle")}</h1>
+      <p className="q-sub">{t("banksHint")}</p>
+      <p className="notice">{pick(BANK_INCLUSION_RULE, s.lang)}</p>
+      <ul className="bank-list">
+        {BANKS.map((b) => (
+          <li key={b.id} className="bank" data-bank={b.id}>
+            <p className="bank-name">{pick(b.name, s.lang)}</p>
+            <dl className="product-facts">
+              {[b.rd.rate, b.rd.minimum, b.fd.rate, b.fd.minimum].map((id) => (
+                <div key={id}><dt>{pick(figure(id)!.label, s.lang)}</dt><dd><Fig id={id} /></dd></div>
+              ))}
+            </dl>
+            <Evidence ids={b.evidence} />
+          </li>
+        ))}
+      </ul>
+      <p className="notice">{t("checkBankSite")} {t("saveNotice")}</p>
       <details className="adviser">
         <summary>{t("adviserBtn")}</summary>
         <p>{t("adviserBody")}</p>

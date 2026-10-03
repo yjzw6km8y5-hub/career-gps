@@ -6,6 +6,7 @@ import type { CareerPack, Lang, Text } from "./schema";
 import { STRINGS } from "../i18n";
 import { isEvidenceVerified } from "../lib/plan";
 import { SAVINGS_EVIDENCE, SAVINGS_FIGURES, SAVINGS_GROUPS } from "./savings";
+import { BANK_EVIDENCE, BANK_FIGURES, BANK_INCLUSION_RULE, BANKS } from "./banks";
 
 const LANGS: Lang[] = ["en", "mr"];
 
@@ -145,6 +146,34 @@ describe("where to keep the money", () => {
     const all = texts(SAVINGS_GROUPS);
     expect(all.filter((t) => !t.en.trim() || !t.mr.trim())).toEqual([]);
     expect(all.flatMap((t) => LANGS.map((l) => t[l])).filter((s) => /\d[\d,.]*\s*(₹|%|lakh|crore|years?)|₹\s*\d/i.test(s))).toEqual([]);
+  });
+});
+
+describe("bank-by-bank comparison", () => {
+  it("is always in alphabetical order (never a ranking)", () => {
+    const names = BANKS.map((b) => b.name.en);
+    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, "en")));
+  });
+  it("every rate and minimum is a [placeholder] backed by that bank's own evidence record", () => {
+    const ids = new Set(BANK_EVIDENCE.map((e) => e.id));
+    for (const b of BANKS) {
+      expect(b.evidence.every((id) => ids.has(id)), b.id).toBe(true);
+      for (const f of [b.rd.rate, b.rd.minimum, b.fd.rate, b.fd.minimum]) {
+        expect(BANK_FIGURES[f].value, f).toBeNull();
+        expect(BANK_FIGURES[f].evidence).toBe(b.evidence[0]);
+        for (const l of LANGS) expect(BANK_FIGURES[f].placeholder[l]).toMatch(PLACEHOLDER);
+      }
+    }
+  });
+  it("evidence expires quarterly, so stale rates are flagged", () => {
+    for (const e of BANK_EVIDENCE) expect(e.expiryRule.en).toMatch(/quarter/);
+  });
+  it("has no badges, rankings or referral wording, in English or Marathi", () => {
+    for (const t of [...texts(BANKS), BANK_INCLUSION_RULE, STRINGS.banksHint, STRINGS.banksTitle, STRINGS.compareBanks]) {
+      expect(t.en).not.toMatch(/\b(best|top|recommended|featured|sponsored|partner|offer)\b/i);
+      expect(t.mr).not.toMatch(/(सर्वोत्तम|शिफारस|प्रायोजित|ऑफर)/);
+    }
+    expect(BANK_INCLUSION_RULE.en).toMatch(/owner to decide/);
   });
 });
 

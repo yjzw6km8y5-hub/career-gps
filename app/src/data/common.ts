@@ -4,6 +4,7 @@ import type { CareerPack, Figure, Profile, Text } from "./schema";
 import { exampleEvidence, INDIA, placeholderFigure as fig, tx } from "./helpers";
 import { CARDIOLOGIST } from "./careers/cardiologist";
 import { SAVINGS_EVIDENCE, SAVINGS_FIGURES } from "./savings";
+import { BANK_EVIDENCE, BANK_FIGURES } from "./banks";
 import { MUSICIAN } from "./careers/musician";
 
 export interface StatePack {
@@ -67,12 +68,14 @@ export const POSSIBILITIES: { id: string; icon: string; name: Text }[] = [
 // Money figures used by every journey. All [placeholders] until the cost engine has sourced inputs.
 export const COMMON_EVIDENCE = [
   ...SAVINGS_EVIDENCE,
+  ...BANK_EVIDENCE,
   exampleEvidence("ev.common.income", tx("Income bands used by scholarships.", "शिष्यवृत्तींसाठी वापरले जाणारे उत्पन्न गट."), tx("[Scholarship income limits: official source to attach]", "[शिष्यवृत्तीच्या उत्पन्न मर्यादा: अधिकृत स्रोत जोडायचा आहे]"), INDIA),
   exampleEvidence("ev.common.estimate", tx("Funding gap and monthly saving estimate, worked out from the costs and support above.", "वरील खर्च आणि मदतीवरून काढलेली निधीतील तूट आणि मासिक बचतीचा अंदाज."), tx("[Calculated from sourced costs: not yet possible]", "[तपासलेल्या खर्चावरून मोजायचे: अजून शक्य नाही]"), INDIA, tx("Re-calculate when any cost or support changes", "कोणताही खर्च किंवा मदत बदलल्यास पुन्हा मोजा"))
 ];
 
 export const COMMON_FIGURES: Record<string, Figure> = {
   ...SAVINGS_FIGURES,
+  ...BANK_FIGURES,
   "income.low": fig(tx("Monthly family income, lower band", "कुटुंबाचे मासिक उत्पन्न, खालचा गट"), tx("[lower income band]", "[खालचा उत्पन्न गट]"), "INR/month", "ev.common.income"),
   "income.mid": fig(tx("Monthly family income, middle band", "कुटुंबाचे मासिक उत्पन्न, मधला गट"), tx("[middle income band]", "[मधला उत्पन्न गट]"), "INR/month", "ev.common.income"),
   "income.high": fig(tx("Monthly family income, higher band", "कुटुंबाचे मासिक उत्पन्न, वरचा गट"), tx("[higher income band]", "[वरचा उत्पन्न गट]"), "INR/month", "ev.common.income"),

@@ -2,10 +2,10 @@ import { expect, test, type Page } from "@playwright/test";
 
 // Every screen, in every language, at phone size (Pixel 7, ~412px; the narrow-390 check is below).
 const SCREENS = ["start", "search", "possibilities", "country", "country-planned", "dream", "handoff", "reality", "routes", "route",
-  "where", "readiness", "costs", "support", "gap", "monthly", "savings", "actions", "review", "passport"];
+  "where", "readiness", "costs", "support", "gap", "monthly", "savings", "banks", "actions", "review", "passport"];
 // Screens that state facts must show a review label (all Example until a person verifies them).
 // (Costs is checked in the journey test: while it is asking its question it shows no claim yet.)
-const CLAIM_SCREENS = ["handoff", "reality", "routes", "route", "readiness", "support", "gap", "monthly", "savings", "actions", "passport"];
+const CLAIM_SCREENS = ["handoff", "reality", "routes", "route", "readiness", "support", "gap", "monthly", "savings", "banks", "actions", "passport"];
 
 async function checkScreen(page: Page, screen: string) {
   const primary = await page.locator("[data-primary]:visible").count();

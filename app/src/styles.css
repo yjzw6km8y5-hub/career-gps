@@ -457,3 +457,6 @@ h1:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 4px; }
 .product-facts dt { color: var(--muted); }
 .product-facts dd { margin: 0; }
 .risk-list { margin: 4px 0 0; padding-left: 4px; list-style: none; display: grid; gap: 4px; }
+.bank-list { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 10px; }
+.bank { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; }
+.bank-name { margin: 0; font-weight: 700; font-size: 18px; }

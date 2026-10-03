@@ -250,6 +250,10 @@ export const STRINGS = {
   howReturns: { en: "How the return works", mr: "परतावा कसा ठरतो" },
   thingsToKnow: { en: "Things to know", mr: "लक्षात ठेवण्यासारखे" },
   seeProducts: { en: "See the options", mr: "पर्याय पाहा" },
+  compareBanks: { en: "🏦 Compare bank deposits (RD, FD)", mr: "🏦 बँक ठेवींची तुलना (RD, FD)" },
+  banksTitle: { en: "Bank deposits, bank by bank", mr: "बँकनिहाय बँक ठेवी" },
+  banksHint: { en: "In alphabetical order. The order is not a ranking, and no bank pays to be here.", mr: "अक्षरक्रमाने. हा क्रम म्हणजे क्रमवारी नाही, आणि इथे दिसण्यासाठी कोणतीही बँक पैसे देत नाही." },
+  checkBankSite: { en: "Rates change. Check the bank's own site before acting.", mr: "दर बदलतात. निर्णयापूर्वी बँकेच्या स्वतःच्या संकेतस्थळावर तपासा." },
   saveNotice: { en: "Information only, not financial advice. Rates change; confirm with the provider before acting.", mr: "ही फक्त माहिती आहे, आर्थिक सल्ला नाही. दर बदलतात; निर्णयापूर्वी संबंधित बँक किंवा संस्थेकडून खात्री करा." },
 
   actionsTitle: { en: "Your next three actions", mr: "तुमच्या पुढच्या तीन कृती" },
