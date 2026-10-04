@@ -1,3 +1,4 @@
 time,cycle,result,reason,commit,builder,reviewer
 2026-10-03T00:00,1,ok,study in India vs abroad; check passed,75eef9d,claude,
 2026-10-04T00:00,3,ok,track line in Passport; check passed,d7c0ffb,claude,codex
+2026-10-04T12:00,4,ok,limit playwright workers and add one retry; check passed,see git log,claude,
