@@ -294,3 +294,30 @@ for (const lang of ["en", "mr"] as Lang[]) {
     });
   }
 }
+
+for (const lang of ["en", "mr"] as Lang[]) {
+  const t = (k: StringKey, v?: Record<string, string | number>) => translate(lang, k, v);
+  test(`[${lang}] the chosen study track is kept after saving, continuing, and shows by name in the Passport`, async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(`/?screen=routes&lang=${lang}&career=musician`);
+    await page.locator('[data-action="tracks"]').click();
+    await page.locator('[data-track="abroad-return"]').click();
+    await page.getByRole("button", { name: new RegExp(t("back")) }).click();
+    await expect(page.locator('[data-screen="routes"]')).toBeVisible();
+    await page.goto(`/?lang=${lang}`);                                    // closing the page and coming back
+    await page.locator('[data-start="continue"]').click();
+    await expect(page.locator('[data-screen="routes"]')).toBeVisible();
+    await next(page);                                                     // → where
+    await page.locator('[data-answer="daily"]').click();
+    await next(page); await next(page);                                   // → readiness → costs
+    await page.locator('[data-answer="some"]').click();
+    await next(page);                                                     // → support
+    await next(page); await next(page); await next(page);                 // → gap → monthly → actions
+    await next(page);
+    await page.locator('[data-answer="results"]').click();
+    await expect(page.locator('[data-screen="passport"]')).toBeVisible();
+    await expect(page.locator("[data-passport-track]")).toContainText(
+      lang === "en" ? "Study abroad, return to India" : "परदेशात शिक्षण, भारतात परत");
+    await expect(page.locator("[data-passport-track]")).not.toContainText(lang === "en" ? "Study in India, work in India" : "भारतात शिक्षण, भारतात काम");
+  });
+}
