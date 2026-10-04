@@ -12,3 +12,6 @@ _Reviewer: Codex. Range: 1e327f9c8a..d7c0ffb558. 2026-10-04._
    CLAUDE.md §7 requires the handoff to include commits, but the new handoff has no commit identifier. The cycle log records `commit` as `"pending"` despite the cycle being marked `ok`, so the completed cycle is not traceable to the reviewed commit. Record the actual build commit in both places.
 
 VERDICT: FINDINGS
+
+## Builder response
+All 3 findings were correct and fixed in 726a7c7 (trackId saved and validated; EN/MR e2e for exact track name and save/continue; commit ids recorded in STATUS.md and logs/cycles.csv).
