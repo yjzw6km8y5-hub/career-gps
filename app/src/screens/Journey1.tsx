@@ -123,7 +123,8 @@ export function RouteDetail() {
   const adjacent = pack.adjacent.filter((a) => route.adjacent?.includes(a.id));
   return (
     <Screen name="route">
-      <NavBar title={pick(route.name, s.lang)} />
+      <NavBar />
+      <h1 className="screen-title">{pick(route.name, s.lang)}</h1>
       <p className="lede-strong">{route.icon} {pick(route.summary, s.lang)}</p>
       {route.reuses && (
         <div className="reuses">

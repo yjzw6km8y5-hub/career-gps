@@ -79,7 +79,8 @@ export function Search() {
   const results = words ? CATALOGUE.filter((c) => (c.words + " " + c.name.en + " " + c.name.mr).toLowerCase().includes(words)) : CATALOGUE;
   return (
     <Screen name="search">
-      <NavBar title={t("searchTitle")} />
+      <NavBar />
+      <h1 className="screen-title">{t("searchTitle")}</h1>
       <label className="search-label" htmlFor="career-search">{t("searchLabel")}</label>
       <input id="career-search" className="search-input" type="search" value={q} placeholder={t("searchPlaceholder")} onChange={(e) => setQ(e.target.value)} autoComplete="off" />
       {results.length ? <CareerList items={results} /> : <p className="notice">{t("noResults")}</p>}

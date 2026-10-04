@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { COMMON_EVIDENCE, COMMON_FIGURES } from "./data/common";
 import type { EvidenceRecord, Figure, ReviewLevel } from "./data/schema";
 import { pick } from "./i18n";
@@ -77,6 +77,7 @@ export function NavBar({ title, extra }: { title?: string; extra?: ReactNode }) 
     <div className="navbar">
       <button type="button" className="nav-back" onClick={back}>← {t("back")}</button>
       {title && <span className="nav-title">{title}</span>}
+      <Listen />
       {extra}
     </div>
   );
@@ -85,17 +86,30 @@ export function NavBar({ title, extra }: { title?: string; extra?: ReactNode }) 
 // What the Listen button reads: the screen title, then its main content, in reading order.
 const SAY = "main h1, main .q-sub, main .lede-strong, main .ask-q, main .ask-why, main .q-name, main .select-name, main .day-line li, " +
   "main .route-name, main .route-summary, main .dim-name, main .dim .level, main .dim-reason, main .dim-action, main .bn-lead, main .bn-value, " +
-  "main .bn-unit, main .scheme-name, main .scheme-status, main .action-owner, main .action-text, main .action-why, main .passport dt, main .passport dd, main .soon p";
+  "main .bn-unit, main .scheme-name, main .scheme-status, main .action-owner, main .action-text, main .action-why, main .passport dt, main .passport dd, main .soon p, " +
+  "main .notice, main .savings-name, main .savings-summary, main .product p, main .risk-list li, main .bank-name, main .product-facts dt, " +
+  "main .product-facts dd, main .pw-title, main .pw-detail, main .gate-q, main .ev-record dd:first-of-type";
 const SPEECH_LANG = { en: "en-IN", mr: "mr-IN" } as const;
 
 /** Reads the current screen aloud (for parents and children who read little). Unchecked [placeholders] are read as "not checked yet". */
 export function Listen() {
   const { s, t } = useApp();
   const [note, setNote] = useState("");
+  const voices = useRef<SpeechSynthesisVoice[]>([]);
+  // Browsers often return an empty voice list until "voiceschanged" fires, so keep the latest list.
+  useEffect(() => {
+    if (!("speechSynthesis" in window)) return;
+    const synth = window.speechSynthesis;
+    const load = () => { voices.current = synth.getVoices(); };
+    load();
+    synth.addEventListener?.("voiceschanged", load);
+    return () => synth.removeEventListener?.("voiceschanged", load);
+  }, []);
   const say = () => {
     if (!("speechSynthesis" in window)) { setNote(t("noVoice")); return; }
-    const voices = window.speechSynthesis.getVoices();
-    if (s.lang === "mr" && voices.length > 0 && !voices.some((v) => v.lang.toLowerCase().startsWith("mr"))) setNote(t("noMarathiVoice"));
+    const list = window.speechSynthesis.getVoices();
+    if (list.length) voices.current = list;
+    if (s.lang === "mr" && !voices.current.some((v) => v.lang.toLowerCase().startsWith("mr"))) setNote(t("noMarathiVoice"));
     const text = [...document.querySelectorAll<HTMLElement>(SAY)].map((el) => el.innerText.trim()).filter(Boolean).join(". ")
       .replace(/\[[^\]]*\]/g, t("notCheckedSpoken"));
     window.speechSynthesis.cancel();
@@ -119,7 +133,6 @@ export function StepHeader({ step }: { step: (typeof JOURNEY)[number] }) {
   return (
     <>
       <NavBar extra={<>
-        <Listen />
         {showChange && <button type="button" className="nav-extra" data-action="change" onClick={() => update({ changeOpen: true })}>{t("changeSomething")}</button>}
       </>} />
       <div className="q-progress" role="progressbar" aria-valuemin={1} aria-valuemax={JOURNEY.length} aria-valuenow={n}

@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 // Accessibility (WCAG 2.1 A/AA rules from axe-core) on every screen, both careers, both languages, at 390px.
 const SCREENS = ["start", "search", "possibilities", "country", "country-planned", "dream", "handoff", "reality", "routes", "route",
-  "where", "readiness", "costs", "support", "gap", "monthly", "savings", "banks", "actions", "review", "passport"];
+  "where", "readiness", "costs", "support", "gap", "monthly", "savings", "banks", "tracks", "actions", "review", "passport"];
 
 for (const career of ["cardiologist", "musician"]) {
   for (const lang of ["en", "mr"]) {

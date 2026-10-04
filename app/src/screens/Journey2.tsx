@@ -1,4 +1,4 @@
-import { AskInline, Evidence, Fig, Label, LevelBadge, Listen, NavBar, NextButton, Screen, StepHeader, useFigure, useLevelOf } from "../components";
+import { AskInline, Evidence, Fig, Label, LevelBadge, NavBar, NextButton, Screen, StepHeader, useFigure, useLevelOf } from "../components";
 import { SAVINGS_GROUPS } from "../data/savings";
 import { BANK_INCLUSION_RULE, BANKS } from "../data/banks";
 import type { Budget, Income, Place } from "../data/schema";
@@ -178,7 +178,7 @@ export function Savings() {
   const figure = useFigure();
   return (
     <Screen name="savings">
-      <NavBar title={t("savingsTitle")} extra={<Listen />} />
+      <NavBar title={t("savingsTitle")} />
       <h1 className="screen-title">{t("savingsTitle")}</h1>
       <p className="q-sub">{t("savingsHint")}</p>
       <ul className="savings-list">
@@ -226,7 +226,7 @@ export function Banks() {
   const figure = useFigure();
   return (
     <Screen name="banks">
-      <NavBar title={t("banksTitle")} extra={<Listen />} />
+      <NavBar title={t("banksTitle")} />
       <h1 className="screen-title">{t("banksTitle")}</h1>
       <p className="q-sub">{t("banksHint")}</p>
       <p className="notice">{pick(BANK_INCLUSION_RULE, s.lang)}</p>
@@ -261,7 +261,7 @@ export function Tracks() {
   const row = (label: string, body: ReactNode) => <div><dt>{label}</dt><dd>{body}</dd></div>;
   return (
     <Screen name="tracks">
-      <NavBar title={t("tracksTitle")} extra={<Listen />} />
+      <NavBar title={t("tracksTitle")} />
       <h1 className="screen-title">{t("tracksTitle")}</h1>
       <p className="q-sub">{t("tracksHint")}</p>
       <div className="track-pick" role="radiogroup" aria-label={t("tracksTitle")}>

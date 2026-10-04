@@ -32,10 +32,11 @@ After each change: `npm --prefix app run check`.
   - asks about practice instead of marks; no medical words.
 - Use-case bank: 12 fictional family situations with the expected route, cost scenario, readiness and three actions (`app/src/lib/personas.test.ts`).
 - Accessibility: axe WCAG 2.1 AA on every screen, both careers, both languages, child mode and the change sheet. Fixed contrast (parent orange #C2410C), progress-bar label, colour fade with reduced motion, dark-theme green.
-- Tests now: 83 data/engine tests, 214 browser tests.
+- Tests now (npm run check, 2026-10-04): 98 data/engine tests, 265 browser tests.
 
 ## Handoff
 _Newest note first. Each tool ends its turn with a note here (CLAUDE.md section 7)._
+- 2026-10-04, builder: claude (runner, fixing review of cycle 2). Fixed all 6 findings: tracks in the a11y spec; Listen inside every NavBar; Listen also reads savings, banks, tracks, route detail, notices and evidence claims; every screen has an h1 (search, route detail added) with focus tests; Marathi-voice note handles empty/late voice lists. Check passes (98 unit + 265 browser). Next: see Next step.
 - 2026-10-03, builder: claude (runner cycle). Previous cycle timed out after 60 min; this one ran the full check once (about 4 min) and finished. Built: study in India vs abroad (tracks). Check passes (all unit + 234 browser tests). Unfinished: a11y spec for the tracks screen, Passport line. Next: see Next step.
 - 2026-10-03, builder: claude (owner's session). Built: bank-by-bank comparison. All checks pass (87 + 226). Next builder: study in India vs abroad (Next step). Codex: review everything from 1fe96ab (large range; use git diff).
 - 2026-10-03, builder: claude (owner's session). Also built: "Where to keep the money", Listen button, focus handling. All checks pass (83 + 214). Next builder: bank-by-bank comparison (Next step).
