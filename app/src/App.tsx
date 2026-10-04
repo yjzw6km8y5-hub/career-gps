@@ -7,7 +7,8 @@ import { saveJourney } from "./save";
 import { AppContext, SCREENS, stepIndex, type AppApi, type AppState, type Changeable, type Mode, type Screen } from "./state";
 import { Country, CountryPlanned, Possibilities, Search, Start } from "./screens/Start";
 import { Dream, Handoff, Reality, RouteDetail, Routes, Where } from "./screens/Journey1";
-import { Banks, Costs, Gap, Monthly, Readiness, Savings, Support } from "./screens/Journey2";
+import { DEFAULT_TRACK } from "./data/tracks";
+import { Banks, Costs, Gap, Monthly, Readiness, Savings, Support, Tracks } from "./screens/Journey2";
 import { Actions, ChangeSheet, Passport, Review } from "./screens/Journey3";
 
 function load(k: string): string | null { try { return localStorage.getItem(k); } catch { return null; } }
@@ -28,7 +29,7 @@ function initialState(): AppState {
     screen,
     history: [],
     // Deep links into the journey open the cardiologist unless another ready pack is named.
-    careerId: career && PACKS[career] ? career : stepIndex(screen) >= 0 || screen === "route" || screen === "handoff" || screen === "savings" || screen === "banks" ? "cardiologist" : null,
+    careerId: career && PACKS[career] ? career : stepIndex(screen) >= 0 || screen === "route" || screen === "handoff" || screen === "savings" || screen === "banks" || screen === "tracks" ? "cardiologist" : null,
     attractions: [],
     profile: { ...START_PROFILE },
     skipped: [],
@@ -39,14 +40,15 @@ function initialState(): AppState {
     routeId: null,
     readinessRoute: null,
     changeOpen: false,
-    plannedMarket: null
+    plannedMarket: null,
+    trackId: DEFAULT_TRACK
   };
 }
 
 const VIEWS: Record<Screen, () => JSX.Element> = {
   start: Start, search: Search, possibilities: Possibilities, country: Country, "country-planned": CountryPlanned,
   dream: Dream, handoff: Handoff, reality: Reality, routes: Routes, route: RouteDetail, where: Where,
-  readiness: Readiness, costs: Costs, support: Support, gap: Gap, monthly: Monthly, savings: Savings, banks: Banks,
+  readiness: Readiness, costs: Costs, support: Support, gap: Gap, monthly: Monthly, savings: Savings, banks: Banks, tracks: Tracks,
   actions: Actions, review: Review, passport: Passport
 };
 
@@ -92,7 +94,7 @@ export default function App() {
 
   // Existing moods, no redesign: the starry sky for opening screens and Child mode; calm and light
   // for information-dense journey screens when a parent is present.
-  const inJourney = stepIndex(s.screen) >= 0 || s.screen === "route" || s.screen === "handoff" || s.screen === "savings" || s.screen === "banks";
+  const inJourney = stepIndex(s.screen) >= 0 || s.screen === "route" || s.screen === "handoff" || s.screen === "savings" || s.screen === "banks" || s.screen === "tracks";
   const role = !inJourney ? "home" : s.mode === "child" ? "child" : "parent";
   useEffect(() => {
     document.documentElement.lang = s.lang;

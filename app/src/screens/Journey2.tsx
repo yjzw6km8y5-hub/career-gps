@@ -2,6 +2,8 @@ import { AskInline, Evidence, Fig, Label, LevelBadge, Listen, NavBar, NextButton
 import { SAVINGS_GROUPS } from "../data/savings";
 import { BANK_INCLUSION_RULE, BANKS } from "../data/banks";
 import type { Budget, Income, Place } from "../data/schema";
+import type { ReactNode } from "react";
+import { TRACK_PLANNED_NOTE } from "../data/tracks";
 import { pick } from "../i18n";
 import { matchSchemes, schemesForGap, schoolYearsLeft, type RoutePlan } from "../lib/plan";
 import { useApp } from "../state";
@@ -246,6 +248,49 @@ export function Banks() {
         <summary>{t("adviserBtn")}</summary>
         <p>{t("adviserBody")}</p>
       </details>
+      <p className="screen-foot"><Label kind="example" /></p>
+    </Screen>
+  );
+}
+
+/** Study in India vs abroad: four tracks, one shown at a time. Reads the career pack; names no career. */
+export function Tracks() {
+  const { s, t, pack, update } = useApp();
+  const figure = useFigure();
+  const track = pack.tracks.find((x) => x.id === s.trackId) ?? pack.tracks[0];
+  const row = (label: string, body: ReactNode) => <div><dt>{label}</dt><dd>{body}</dd></div>;
+  return (
+    <Screen name="tracks">
+      <NavBar title={t("tracksTitle")} extra={<Listen />} />
+      <h1 className="screen-title">{t("tracksTitle")}</h1>
+      <p className="q-sub">{t("tracksHint")}</p>
+      <div className="track-pick" role="radiogroup" aria-label={t("tracksTitle")}>
+        {pack.tracks.map((x) => (
+          <button key={x.id} type="button" role="radio" aria-checked={x.id === track.id} className="track-btn" data-track={x.id} onClick={() => update({ trackId: x.id })}>
+            <span aria-hidden="true">{x.icon}</span> {pick(x.name, s.lang)}
+          </button>
+        ))}
+      </div>
+      <p className="lede-strong">{track.icon} {pick(track.summary, s.lang)}</p>
+      <div className="big-number">
+        <p className="bn-lead">{t("trackTotal")}</p>
+        <p className="bn-value" data-big-number>₹<Fig id={track.costInr} /></p>
+      </div>
+      <details className="track-facts" data-track-details>
+        <summary>{t("trackMore")}</summary>
+        <dl className="product-facts">
+          {track.costForeign && row(t("trackForeign"), <Fig id={track.costForeign} />)}
+          {track.rate && row(t("trackRate"), <Fig id={track.rate} />)}
+          {row(t("trackYears"), <Fig id={track.years} />)}
+          {row(t("trackExams"), pick(track.exams, s.lang))}
+          {row(t("trackVisa"), pick(track.visa, s.lang))}
+          {row(t("trackPay"), <Fig id={track.pay} />)}
+          {row(t("trackHowMany"), pick(track.howMany, s.lang))}
+        </dl>
+      </details>
+      <Evidence ids={[...track.evidence, ...(track.rate ? [figure(track.rate)!.evidence] : [])]} />
+      <p className="notice">{pick(TRACK_PLANNED_NOTE, s.lang)}</p>
+      <p className="notice">{t("saveNotice")}</p>
       <p className="screen-foot"><Label kind="example" /></p>
     </Screen>
   );

@@ -105,6 +105,7 @@ export function Routes() {
       <div className="route-list">
         {pack.routes.map((r) => <RouteCard key={r.id} route={r} onOpen={() => { update({ routeId: r.id }); go("route"); }} />)}
       </div>
+      <button type="button" className="secondary-btn" data-action="tracks" onClick={() => go("tracks")}>{t("tracksBtn")}</button>
       <NextButton onClick={() => go("where")} />
     </Screen>
   );

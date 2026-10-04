@@ -141,6 +141,24 @@ export interface Route {
   evidence: string[];
 }
 
+// ---------- study in India vs abroad ----------
+/** One of four tracks (study and work in India or abroad). Numbers are figure ids; only exams text is career-specific. */
+export interface StudyTrack {
+  id: string;
+  icon: string;
+  name: Text;
+  summary: Text;
+  costInr: string;               // figure id
+  costForeign: string | null;    // figure id, in the destination currency (abroad tracks only)
+  rate: string | null;           // figure id of the dated exchange rate (abroad tracks only)
+  years: string;                 // figure id
+  exams: Text;                   // extra exams or licences ([placeholder] until sourced)
+  visa: Text;
+  pay: string;                   // figure id
+  howMany: Text;                 // "Reliable data not available" unless reliable data exists
+  evidence: string[];
+}
+
 // ---------- actions ----------
 export type Owner = "child" | "parent" | "school";
 
@@ -190,6 +208,7 @@ export interface CareerPack {
   schemes: SupportScheme[];
   adjacent: AdjacentCareer[];
   actions: Action[];
+  tracks: StudyTrack[];
   figures: Record<string, Figure>;
   evidence: EvidenceRecord[];
   /** Career-specific wording that replaces a shared screen string (e.g. 'audition' instead of 'entrance exam'). */

@@ -2,9 +2,16 @@
 // (packet-2026-10-01-cardiologist-path.md). Every claim is "example" until a named person checks it
 // against an official source. Every number is a [placeholder].
 import type { CareerPack } from "../schema";
+import { buildTracks } from "../tracks";
 import { exampleEvidence as ev, INDIA, MAHARASHTRA, placeholderFigure as fig, tx } from "../helpers";
 
 const OFFICIAL = (en: string, mr: string) => tx(`[${en}: official source to attach]`, `[${mr}: अधिकृत स्रोत जोडायचा आहे]`);
+
+const TRACKS = buildTracks("c", {
+  examsIndia: tx("[Entrance exam and any later exams: to be sourced]", "[प्रवेश परीक्षा आणि नंतरच्या परीक्षा: स्रोत शोधायचा आहे]"),
+  examsAbroad: tx("[Licensing exams to practise abroad: to be sourced]", "[परदेशात व्यवसाय करण्यासाठी परवाना परीक्षा: स्रोत शोधायचा आहे]"),
+  examsReturn: tx("[Exams to practise in India after a degree abroad: to be sourced]", "[परदेशी पदवीनंतर भारतात व्यवसायासाठी परीक्षा: स्रोत शोधायचा आहे]")
+});
 
 export const CARDIOLOGIST: CareerPack = {
   career: {
@@ -306,7 +313,10 @@ export const CARDIOLOGIST: CareerPack = {
       reason: tx("School support may reduce the need for paid coaching.", "शाळेच्या मदतीमुळे पैसे भरून शिकवणी लावण्याची गरज कमी होऊ शकते.") }
   ],
 
+  tracks: TRACKS.tracks,
+
   figures: {
+    ...TRACKS.figures,
     "time.main": fig(tx("Time on the main route", "मुख्य मार्गाचा कालावधी"), tx("[time, to be sourced]", "[कालावधी, स्रोत शोधायचा आहे]"), "years", "ev.mbbs"),
     "pay.cardiologist": fig(tx("Pay range for cardiologists", "हृदयरोगतज्ज्ञांच्या पगाराची श्रेणी"), tx("[pay range]", "[पगार श्रेणी]"), "INR/month", "ev.pay"),
     "fig.minMarks": fig(tx("Minimum Class 12 marks", "बारावीतील किमान गुण"), tx("[verified requirement]", "[तपासलेली अट]"), "%", "ev.minmarks"),
@@ -335,6 +345,7 @@ export const CARDIOLOGIST: CareerPack = {
   },
 
   evidence: [
+    ...TRACKS.evidence,
     ev("ev.reality", tx("What a cardiologist does.", "हृदयरोगतज्ज्ञ काय करतात."), OFFICIAL("Medical council or professional body description", "वैद्यकीय परिषद किंवा व्यावसायिक संस्थेचे वर्णन"), INDIA),
     ev("ev.day", tx("An example day of a cardiologist.", "हृदयरोगतज्ज्ञाचा एक उदाहरणादाखल दिवस."), tx("[Practitioner interviews, checked by a reviewer: to gather]", "[व्यावसायिकांच्या मुलाखती, तज्ज्ञांनी तपासलेल्या: गोळा करायच्या आहेत]"), MAHARASHTRA,
        tx("Re-check every two years", "दर दोन वर्षांनी पुन्हा तपासा")),

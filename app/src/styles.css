@@ -460,3 +460,8 @@ h1:focus-visible { outline: 3px solid var(--accent-2); outline-offset: 4px; }
 .bank-list { list-style: none; padding: 0; margin: 0 0 12px; display: grid; gap: 10px; }
 .bank { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; }
 .bank-name { margin: 0; font-weight: 700; font-size: 18px; }
+.track-pick { display: grid; gap: 8px; margin: 8px 0 16px; }
+.track-btn { border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 10px 14px; min-height: var(--tap); font-size: 16px; text-align: left; }
+.track-btn[aria-checked="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+.track-facts { margin: 12px 0; }
+.track-facts summary { cursor: pointer; font-weight: 700; color: var(--accent); min-height: var(--tap); display: flex; align-items: center; }

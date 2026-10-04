@@ -2,11 +2,18 @@
 // Nothing here is researched yet: every claim is "example", every number a [placeholder], and every
 // institution, exam board or scheme name that is not checked is written as "[to verify]".
 import type { CareerPack } from "../schema";
+import { buildTracks } from "../tracks";
 import { exampleEvidence as ev, INDIA, MAHARASHTRA, placeholderFigure as fig, tx } from "../helpers";
 
 const TO_FIND = (en: string, mr: string) => tx(`[${en}: source to find]`, `[${mr}: स्रोत शोधायचा आहे]`);
 const ENTRY = tx("[Entry route, duration and fees: to be sourced]", "[प्रवेश मार्ग, कालावधी आणि शुल्क: स्रोत शोधायचा आहे]");
 const YEARLY = tx("Re-check every year", "दरवर्षी पुन्हा तपासा");
+
+const TRACKS = buildTracks("m", {
+  examsIndia: tx("[Auditions and graded exams: to be sourced]", "[ऑडिशन आणि श्रेणी परीक्षा: स्रोत शोधायचा आहे]"),
+  examsAbroad: tx("[Auditions, work permits or other requirements to perform abroad: to be sourced]", "[परदेशात सादरीकरणासाठी ऑडिशन, कामाचे परवाने किंवा इतर अटी: स्रोत शोधायचा आहे]"),
+  examsReturn: tx("[Recognition of a degree from abroad in India: to be sourced]", "[परदेशी पदवीला भारतात मान्यता: स्रोत शोधायचा आहे]")
+});
 
 export const MUSICIAN: CareerPack = {
   career: {
@@ -236,7 +243,10 @@ export const MUSICIAN: CareerPack = {
       reason: tx("School events are a first stage to perform on.", "शाळेचे कार्यक्रम हे सादरीकरणाचे पहिले व्यासपीठ असते.") }
   ],
 
+  tracks: TRACKS.tracks,
+
   figures: {
+    ...TRACKS.figures,
     "time.m.main": fig(tx("Time on the main route", "मुख्य मार्गाचा कालावधी"), tx("[time, to be sourced]", "[कालावधी, स्रोत शोधायचा आहे]"), "years", "ev.m.course"),
     "pay.musician": fig(tx("Pay range for musicians", "संगीत कलाकारांच्या उत्पन्नाची श्रेणी"), tx("[pay range]", "[उत्पन्न श्रेणी]"), "INR/month", "ev.m.pay"),
     "fig.m.lessons": fig(tx("Lessons", "शिकवणी"), tx("[lesson fees]", "[शिकवणी शुल्क]"), "INR/month", "ev.m.training"),
@@ -262,6 +272,7 @@ export const MUSICIAN: CareerPack = {
   },
 
   evidence: [
+    ...TRACKS.evidence,
     ev("ev.m.reality", tx("What musicians do.", "संगीत कलाकार काय करतात."), TO_FIND("Professional body or labour data", "व्यावसायिक संस्था किंवा रोजगार माहिती"), INDIA),
     ev("ev.m.day", tx("An example day of a musician.", "संगीत कलाकाराचा एक उदाहरणादाखल दिवस."), TO_FIND("Practitioner interviews, checked by a reviewer", "कलाकारांच्या मुलाखती, तज्ज्ञांनी तपासलेल्या"), MAHARASHTRA, tx("Re-check every two years", "दर दोन वर्षांनी पुन्हा तपासा")),
     ev("ev.m.pay", tx("What musicians earn.", "संगीत कलाकार किती कमावतात."), TO_FIND("Published pay survey", "प्रकाशित उत्पन्न सर्वेक्षण"), INDIA, YEARLY),

@@ -6,6 +6,7 @@ import { CARDIOLOGIST } from "./careers/cardiologist";
 import { SAVINGS_EVIDENCE, SAVINGS_FIGURES } from "./savings";
 import { BANK_EVIDENCE, BANK_FIGURES } from "./banks";
 import { MUSICIAN } from "./careers/musician";
+import { FX_FIGURE_ID } from "./tracks";
 
 export interface StatePack {
   id: string;
@@ -69,6 +70,7 @@ export const POSSIBILITIES: { id: string; icon: string; name: Text }[] = [
 export const COMMON_EVIDENCE = [
   ...SAVINGS_EVIDENCE,
   ...BANK_EVIDENCE,
+  exampleEvidence("ev.common.fx", tx("Exchange rate from rupees to the destination currency, with its date.", "रुपयांतून गंतव्य देशाच्या चलनातील विनिमय दर, तारखेसह."), tx("[Official exchange-rate source: to attach]", "[अधिकृत विनिमय दर स्रोत: जोडायचा आहे]"), tx("India and the destination country", "भारत आणि गंतव्य देश"), tx("Re-check every week, and show the date", "दर आठवड्याला पुन्हा तपासा, आणि तारीख दाखवा")),
   exampleEvidence("ev.common.income", tx("Income bands used by scholarships.", "शिष्यवृत्तींसाठी वापरले जाणारे उत्पन्न गट."), tx("[Scholarship income limits: official source to attach]", "[शिष्यवृत्तीच्या उत्पन्न मर्यादा: अधिकृत स्रोत जोडायचा आहे]"), INDIA),
   exampleEvidence("ev.common.estimate", tx("Funding gap and monthly saving estimate, worked out from the costs and support above.", "वरील खर्च आणि मदतीवरून काढलेली निधीतील तूट आणि मासिक बचतीचा अंदाज."), tx("[Calculated from sourced costs: not yet possible]", "[तपासलेल्या खर्चावरून मोजायचे: अजून शक्य नाही]"), INDIA, tx("Re-calculate when any cost or support changes", "कोणताही खर्च किंवा मदत बदलल्यास पुन्हा मोजा"))
 ];
@@ -76,6 +78,7 @@ export const COMMON_EVIDENCE = [
 export const COMMON_FIGURES: Record<string, Figure> = {
   ...SAVINGS_FIGURES,
   ...BANK_FIGURES,
+  [FX_FIGURE_ID]: fig(tx("Exchange rate (dated)", "विनिमय दर (तारखेसह)"), tx("[exchange rate, with date]", "[विनिमय दर, तारखेसह]"), "rate", "ev.common.fx"),
   "income.low": fig(tx("Monthly family income, lower band", "कुटुंबाचे मासिक उत्पन्न, खालचा गट"), tx("[lower income band]", "[खालचा उत्पन्न गट]"), "INR/month", "ev.common.income"),
   "income.mid": fig(tx("Monthly family income, middle band", "कुटुंबाचे मासिक उत्पन्न, मधला गट"), tx("[middle income band]", "[मधला उत्पन्न गट]"), "INR/month", "ev.common.income"),
   "income.high": fig(tx("Monthly family income, higher band", "कुटुंबाचे मासिक उत्पन्न, वरचा गट"), tx("[higher income band]", "[वरचा उत्पन्न गट]"), "INR/month", "ev.common.income"),

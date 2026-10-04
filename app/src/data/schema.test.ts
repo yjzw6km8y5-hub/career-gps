@@ -193,3 +193,50 @@ describe("screen text", () => {
     for (const sp of Object.values(STATE_PACKS)) for (const l of sp.languages) expect(LANGS).toContain(l);
   });
 });
+
+describe.each(Object.entries(PACKS))("study in India vs abroad: %s", (_, pack: CareerPack) => {
+  const evidenceIds = new Set([...pack.evidence, ...COMMON_EVIDENCE].map((e) => e.id));
+  const fig = (id: string) => pack.figures[id] ?? COMMON_FIGURES[id];
+  it("has the four tracks, India-and-India first (the default)", () => {
+    expect(pack.tracks.map((t) => t.id)).toEqual(["in-in", "in-abroad", "abroad-abroad", "abroad-return"]);
+  });
+  it("every figure and evidence record exists; every number is an unchecked [placeholder]", () => {
+    for (const t of pack.tracks) {
+      for (const id of [t.costInr, t.costForeign, t.rate, t.years, t.pay].filter((x): x is string => !!x)) {
+        expect(fig(id), id).toBeDefined();
+        expect(fig(id).value, id).toBeNull();
+        for (const l of LANGS) expect(fig(id).placeholder[l]).toMatch(PLACEHOLDER);
+      }
+      for (const id of t.evidence) expect(evidenceIds.has(id), id).toBe(true);
+      expect(t.evidence.length).toBeGreaterThan(0);
+    }
+  });
+  it("abroad tracks carry a destination-currency cost, a dated exchange rate and a visa placeholder", () => {
+    for (const t of pack.tracks) {
+      const abroad = t.id !== "in-in";
+      expect(!!t.costForeign, t.id).toBe(abroad);
+      expect(!!t.rate, t.id).toBe(abroad);
+      if (abroad) expect(t.visa.en).toMatch(PLACEHOLDER);
+    }
+    expect(COMMON_EVIDENCE.find((e) => e.id === "ev.common.fx")!.expiryRule.en).toMatch(/week/);
+  });
+  it("exams are placeholders, and 'how many make it' says reliable data is not available", () => {
+    for (const t of pack.tracks) {
+      for (const l of LANGS) expect(t.exams[l], t.id).toMatch(PLACEHOLDER);
+      expect(t.howMany.en).toBe("Reliable data not available");
+    }
+  });
+  it("no ranking words and no typed numbers", () => {
+    for (const t of texts(pack.tracks)) {
+      expect(t.en).not.toMatch(/\b(best|safe|guarantee[ds]?|better)\b/i);
+      expect(t.en).not.toMatch(/\d/);
+    }
+  });
+});
+
+describe("study tracks are career-neutral", () => {
+  it("track names are identical across careers (screens name no career)", () => {
+    const names = Object.values(PACKS).map((p) => p.tracks.map((t) => t.name.en).join("|"));
+    expect(new Set(names).size).toBe(1);
+  });
+});

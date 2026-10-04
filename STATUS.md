@@ -6,15 +6,17 @@ _Control file for the AI Project Runner. Detailed history stays in PROGRESS.md._
 _None open. Human-only items (a timed walkthrough, a Marathi check by a person, evidence research by a named reviewer) are tracked in CONTEXT.md, not here._
 
 ## Next step
-**Study in India vs abroad** (BUILD-PLAN order, addendum C). Four tracks per career, shown one at a time (the family's chosen track; default "study in India, work in India"):
-1. Tracks: study in India + work in India; study in India + work abroad; study abroad + work abroad; study abroad + return to India.
-2. Each track: total cost (rupees, and the destination currency with a dated exchange rate), years, extra exams or licences (e.g. for doctors abroad: `[licensing exams, to be sourced]`), visa route, pay range. All are `[placeholders]` with EvidenceRecords; "how many make it" only where reliable data exists, otherwise "Reliable data not available".
-3. Data in the career packs (schema extension, used by both careers); no career named in screen code. Technical details on tap; at most 3 primary actions.
-4. Canada/US stay "Planned" labels only (do not build Canada/US functionality).
-5. Tests: schema/unit tests for both packs, e2e in English and Marathi at 390px, accessibility.
+**Choose with the owner.** BUILD-PLAN has no further item queued after "Study in India vs abroad". Suggested small steps, in order:
+1. Add the tracks screen to the axe accessibility spec (`app/e2e/a11y.spec.ts`) for both careers and languages.
+2. Show the chosen track in the Passport summary.
+3. Ask the owner what to build next (open: bank inclusion rule, calendar start date).
 
 After each change: `npm --prefix app run check`.
 ## Done recently
+- Study in India vs abroad: side screen opened from the routes screen.
+  - Four tracks per career (schema: `CareerPack.tracks`, built by `app/src/data/tracks.ts`); one shown at a time, default India + India; one big number (total cost); years, exams or licences, visa, pay and destination-currency cost with a dated exchange rate are on tap.
+  - All `[placeholders]` with Example evidence; "how many make it" says "Reliable data not available"; Canada/US only a Planned note.
+  - Tests: 5 schema checks per pack, e2e both careers in English and Marathi at 390px.
 - Bank-by-bank deposits (RD, FD), opened from the savings explainer.
   - Six example banks (incl. India Post) in alphabetical order; no badges, no default, no referral wording.
   - Every rate and minimum is a dated `[placeholder]` with that bank's evidence record (quarterly expiry).
@@ -34,6 +36,7 @@ After each change: `npm --prefix app run check`.
 
 ## Handoff
 _Newest note first. Each tool ends its turn with a note here (CLAUDE.md section 7)._
+- 2026-10-03, builder: claude (runner cycle). Previous cycle timed out after 60 min; this one ran the full check once (about 4 min) and finished. Built: study in India vs abroad (tracks). Check passes (all unit + 234 browser tests). Unfinished: a11y spec for the tracks screen, Passport line. Next: see Next step.
 - 2026-10-03, builder: claude (owner's session). Built: bank-by-bank comparison. All checks pass (87 + 226). Next builder: study in India vs abroad (Next step). Codex: review everything from 1fe96ab (large range; use git diff).
 - 2026-10-03, builder: claude (owner's session). Also built: "Where to keep the money", Listen button, focus handling. All checks pass (83 + 214). Next builder: bank-by-bank comparison (Next step).
 - 2026-10-03, builder: claude (owner's session). Built: musician journey, use-case bank, accessibility checks and fixes. Codex: please review everything from 1fe96ab.

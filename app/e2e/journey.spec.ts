@@ -271,3 +271,24 @@ for (const lang of ["en", "mr"] as Lang[]) {
     expect(text).not.toMatch(/\b(best|top|recommended|featured|sponsored)\b|सर्वोत्तम|शिफारस/i);
   });
 }
+
+for (const lang of ["en", "mr"] as Lang[]) {
+  for (const career of ["cardiologist", "musician"]) {
+    test(`[${lang}] ${career}: study in India or abroad shows one track at a time, details on tap`, async ({ page }) => {
+      await page.setViewportSize({ width: 390, height: 844 });
+      await page.goto(`/?screen=routes&lang=${lang}&career=${career}`);
+      await page.locator('[data-action="tracks"]').click();
+      await expect(page.locator('[data-screen="tracks"]')).toBeVisible();
+      await expect(page.locator("[data-track]")).toHaveCount(4);
+      await expect(page.locator('[data-track="in-in"]')).toHaveAttribute("aria-checked", "true");
+      expect(await page.locator("[data-primary]:visible").count()).toBeLessThanOrEqual(3);
+      await page.locator('[data-track="abroad-abroad"]').click();
+      await expect(page.locator('[data-track="abroad-abroad"]')).toHaveAttribute("aria-checked", "true");
+      await expect(page.locator("[data-big-number]")).toHaveCount(1);
+      await page.locator("[data-track-details] summary").click();
+      await expect(page.locator("[data-track-details]")).toContainText(translate(lang, "trackRate"));
+      const text = await page.locator("main").innerText();
+      expect(text).not.toMatch(lang === "en" ? /\b(best|safest|recommended|guaranteed)\b/i : /(सर्वोत्तम|सुरक्षित|हमी)/);
+    });
+  }
+}
