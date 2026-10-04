@@ -34,7 +34,7 @@ After each change: `npm --prefix app run check`.
 
 ## Handoff
 _Newest note first. Each tool ends its turn with a note here (CLAUDE.md section 7)._
-- 2026-10-04, builder: claude (runner cycle). Browser tests now use 4 workers locally and 1 retry (less load flakiness). Check passes (98 unit + 267 browser, no failures). Next step is still an owner choice.
+- 2026-10-04, builder: claude (runner, fixing review of cycle 5). Cycle 4 commit was 24ebb51 (4 workers, 1 retry); cycle log fixed. Removed the unproven "less flakiness" claim. One full check: 98 unit + 267 browser passed and the reporter showed no "flaky" (retried) tests. That is one run, not proof of a lower flake rate. If a run prints "flaky", treat it as a possible regression and look at it. Next step is still an owner choice.
 - 2026-10-04, builder: claude (runner, re-check of cycle-3 review). All 3 findings were already fixed in 726a7c7; verified in code. Full check: 2 different browser tests failed per run (a11y, musician sample) but pass when run alone, so load-related flakes, not code. Next: consider fewer Playwright workers.
 - 2026-10-04, builder: claude (runner, fixing review of cycle 3). Fixed all 3 findings: the chosen track is now saved and restored (`trackId` in `save.ts`, old saves still load); new EN/MR e2e picks "Study abroad, return to India", saves, continues, and asserts the exact Passport track name; commit ids recorded (cycle 3 built in d7c0ffb, fix in 726a7c7). Check passes (98 unit + 267 browser). Next: see Next step.
 - 2026-10-04, builder: claude (runner cycle, commit d7c0ffb). Built: track line in Passport (EN/MR). Check passes (98 unit + 265 browser). Next: ask the owner what to build.
