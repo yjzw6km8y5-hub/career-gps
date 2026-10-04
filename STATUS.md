@@ -6,13 +6,11 @@ _Control file for the AI Project Runner. Detailed history stays in PROGRESS.md._
 _None open. Human-only items (a timed walkthrough, a Marathi check by a person, evidence research by a named reviewer) are tracked in CONTEXT.md, not here._
 
 ## Next step
-**Choose with the owner.** BUILD-PLAN has no further item queued after "Study in India vs abroad". Suggested small steps, in order:
-1. Add the tracks screen to the axe accessibility spec (`app/e2e/a11y.spec.ts`) for both careers and languages.
-2. Show the chosen track in the Passport summary.
-3. Ask the owner what to build next (open: bank inclusion rule, calendar start date).
+**Choose with the owner.** BUILD-PLAN has no further item queued. Ask the owner what to build next (open: bank inclusion rule, calendar start date).
 
 After each change: `npm --prefix app run check`.
 ## Done recently
+- Passport shows the chosen study track (India vs abroad) as an Example line, English and Marathi; e2e checks it. (The tracks screen was already in the a11y spec.)
 - Study in India vs abroad: side screen opened from the routes screen.
   - Four tracks per career (schema: `CareerPack.tracks`, built by `app/src/data/tracks.ts`); one shown at a time, default India + India; one big number (total cost); years, exams or licences, visa, pay and destination-currency cost with a dated exchange rate are on tap.
   - All `[placeholders]` with Example evidence; "how many make it" says "Reliable data not available"; Canada/US only a Planned note.
@@ -36,6 +34,7 @@ After each change: `npm --prefix app run check`.
 
 ## Handoff
 _Newest note first. Each tool ends its turn with a note here (CLAUDE.md section 7)._
+- 2026-10-04, builder: claude (runner cycle). Built: track line in Passport (EN/MR). Check passes (98 unit + 265 browser). Next: ask the owner what to build.
 - 2026-10-04, builder: claude (runner, fixing review of cycle 2). Fixed all 6 findings: tracks in the a11y spec; Listen inside every NavBar; Listen also reads savings, banks, tracks, route detail, notices and evidence claims; every screen has an h1 (search, route detail added) with focus tests; Marathi-voice note handles empty/late voice lists. Check passes (98 unit + 265 browser). Next: see Next step.
 - 2026-10-03, builder: claude (runner cycle). Previous cycle timed out after 60 min; this one ran the full check once (about 4 min) and finished. Built: study in India vs abroad (tracks). Check passes (all unit + 234 browser tests). Unfinished: a11y spec for the tracks screen, Passport line. Next: see Next step.
 - 2026-10-03, builder: claude (owner's session). Built: bank-by-bank comparison. All checks pass (87 + 226). Next builder: study in India vs abroad (Next step). Codex: review everything from 1fe96ab (large range; use git diff).

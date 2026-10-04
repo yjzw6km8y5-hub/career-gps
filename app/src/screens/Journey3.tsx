@@ -80,6 +80,7 @@ export function Passport() {
   const rp = plan.routes.find((r) => r.route.id === plan.focus)!;
   const reasons = c.attractions.filter((a) => s.attractions.includes(a.id)).map((a) => pick(a.text, s.lang));
   const schemes = matchSchemes(pack, rp.route, s.profile);
+  const track = pack.tracks.find((x) => x.id === s.trackId) ?? pack.tracks[0];
   const keptStages = plan.done.map((id) => pack.stages.find((x) => x.id === id)!).filter(Boolean);
   return (
     <Screen name="passport">
@@ -88,6 +89,7 @@ export function Passport() {
       <dl className="passport">
         <dt>{t("pDream")}</dt><dd>{c.icon} {pick(c.name, s.lang)}{reasons.length > 0 && <> · {t("pBecause")}: {reasons.join(", ")}</>}</dd>
         <dt>{t("pRoute")}</dt><dd>{rp.route.icon} {pick(rp.route.name, s.lang)}</dd>
+        <dt>{t("pTrack")}</dt><dd data-passport-track>{track.icon} {pick(track.name, s.lang)}</dd>
         <dt>{t("pWhere")}</dt><dd>{t("classN", { n: s.profile.classLevel })} · {t(`phase_${currentPhase(s.profile)}`)}</dd>
         <dt>{t("pReadiness")}</dt>
         <dd><ul className="mini-dims">{rp.readiness.map((d) => <li key={d.dim}>{t(`dim_${d.dim}`)}: <LevelBadge level={d.level} /></li>)}</ul></dd>

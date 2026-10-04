@@ -85,6 +85,7 @@ for (const lang of ["en", "mr"] as Lang[]) {
     // 11–12. Review date, then the Career Passport with three clear actions.
     await tap(() => page.locator('[data-answer="term"]').click());
     await expect(page.locator('[data-screen="passport"]')).toBeVisible();
+    await expect(page.locator("[data-passport-track]")).toHaveCount(1);
     await expect(page.locator("[data-passport-action]")).toHaveCount(3);
     await expect(page.locator("[data-review]")).toHaveText(t("review_term"));
 
@@ -159,6 +160,7 @@ for (const lang of ["en", "mr"] as Lang[]) {
     await expect(page.locator("[data-owner]")).toHaveCount(3);
     await next(page);
     await page.locator('[data-answer="results"]').click();
+    await expect(page.locator("[data-passport-track]")).toHaveCount(1);
     await expect(page.locator("[data-passport-action]")).toHaveCount(3);
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(0);

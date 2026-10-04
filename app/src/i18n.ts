@@ -287,6 +287,7 @@ export const STRINGS = {
   passportTitle: { en: "{name}'s Career Passport", mr: "{name}चा करिअर पासपोर्ट" },
   pDream: { en: "Dream", mr: "स्वप्न" },
   pBecause: { en: "Because", mr: "कारण" },
+  pTrack: { en: "Where to study (example)", mr: "कुठे शिकायचे (उदाहरण)" },
   pRoute: { en: "Route we're looking into", mr: "आपण पाहत असलेला मार्ग" },
   pWhere: { en: "Where we are", mr: "आपण कुठे आहोत" },
   pReadiness: { en: "Readiness", mr: "मार्गाची सज्जता" },
