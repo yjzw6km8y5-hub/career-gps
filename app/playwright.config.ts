@@ -5,6 +5,7 @@ import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "e2e",
   timeout: 30_000,
+  globalTimeout: 20 * 60_000, // a hung run must fail, not block the cycle
   fullyParallel: true,
   workers: process.env.CI ? undefined : 4,
   retries: 1,
